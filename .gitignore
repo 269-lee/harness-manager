@@ -41,4 +41,12 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-.vercel
+# local env
+.env.local
+.env*.local
+
+# drizzle migrations output
+drizzle/
+
+# superpowers workspace
+.superpowers/
