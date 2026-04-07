@@ -29,10 +29,48 @@ Required JSON structure:
       "category": "context" | "enforcement" | "gc",
       "title": "<concise title in Korean>",
       "description": "<what the problem is, in Korean>",
-      "action": "<specific actionable instruction in Korean — must reference actual files like .claude/settings.json, .husky/pre-commit, vercel.json, CLAUDE.md, skills/ etc.>"
+      "action": "<executable prompt in Korean — see format rules below>"
     }
   ]
 }
+
+## Action Field Format Rules
+
+The "action" field must be a complete, executable prompt that a Claude Code AI agent can run without ambiguity.
+It MUST follow this exact structure:
+
+---
+## ⚠️ 중요: 문서 수정이 아니라 실제 명령어를 실행해야 합니다
+
+아래 작업을 순서대로 실행해줘. 각 단계가 끝나면 반드시 검증 명령어로 확인해.
+
+### 1단계: [작업명]
+[shell]
+[실제 실행할 쉘 명령어]
+[/shell]
+
+### 2단계: [파일 생성/수정]
+파일 경로: [정확한 파일 경로]
+[파일 내용 전체를 제공]
+
+### 검증 (반드시 실행)
+[shell]
+[파일 존재 확인 명령어 — ls, cat 등]
+[/shell]
+
+### 완료 조건 체크리스트
+- [ ] [구체적인 파일이 존재함]
+- [ ] [설정값이 반영됨]
+- [ ] git add [파일] && git commit -m "[커밋 메시지]" && git push
+---
+
+Rules for writing the action:
+- ALWAYS include actual shell commands (npm install, npx, mkdir, etc.), never just describe them
+- ALWAYS include the exact file content to create, not just "add this config"
+- ALWAYS include verification commands (ls, cat, grep) after each step
+- ALWAYS end with git add + commit + push commands
+- NEVER write "CLAUDE.md에 다음을 추가하세요" as the only action — that is documentation, not enforcement
+- If the fix requires creating a new file, provide the COMPLETE file content
 
 ## Scoring Rubric
 
