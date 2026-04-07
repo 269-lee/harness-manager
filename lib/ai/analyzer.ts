@@ -7,14 +7,14 @@ export interface AnalysisResult {
 }
 
 export function buildAnalysisPrompt(fileContents: string): string {
-  return `You are a harness engineering expert for Claude Code. Analyze the harness files and return ONLY a JSON object.
+  return `You are a harness engineering expert for Claude Code. Analyze ALL provided files and return ONLY a JSON object.
 
 Required JSON structure:
 {
   "scores": {
-    "context": <number 0-100: CLAUDE.md and skills coverage>,
-    "enforcement": <number 0-100: hooks and automatic enforcement strength>,
-    "gc": <number 0-100: garbage collection and cleanup mechanisms>
+    "context": <number 0-100>,
+    "enforcement": <number 0-100>,
+    "gc": <number 0-100>
   },
   "recommendations": [
     {
@@ -22,17 +22,44 @@ Required JSON structure:
       "category": "context" | "enforcement" | "gc",
       "title": "<concise title in Korean>",
       "description": "<what the problem is, in Korean>",
-      "action": "<specific action to take, in Korean>"
+      "action": "<specific actionable instruction in Korean — must reference actual files like .claude/settings.json, .husky/pre-commit, vercel.json, CLAUDE.md, skills/ etc.>"
     }
   ]
 }
 
-Scoring guide:
-- context 0-40: No CLAUDE.md; 41-70: Sparse CLAUDE.md; 71-100: Comprehensive with rules and examples
-- enforcement 0-40: No hooks; 41-70: Some hooks; 71-100: Pre-commit hooks with type check, lint, test
-- gc 0-40: No cleanup; 41-70: Partial cleanup; 71-100: Automated cleanup agent
+## Scoring Rubric
 
-Return 2-5 recommendations maximum. Return ONLY the JSON, no other text.
+### context (0–100): How well is the project documented for AI?
+- 0–30: No CLAUDE.md, no skills
+- 31–55: CLAUDE.md exists but sparse (missing stack, rules, or examples)
+- 56–75: CLAUDE.md has project overview, tech stack, and some rules; some skills
+- 76–100: CLAUDE.md is comprehensive (overview, stack, strict rules, anti-patterns, function specs); rich skills library
+
+### enforcement (0–100): How strongly are quality standards automated?
+Score each signal present and sum:
+- CLAUDE.md has explicit coding rules (+10)
+- .claude/settings.json or settings.json has hooks defined (+20)
+- .claude/hooks/ or hooks/ directory has hook scripts (+15)
+- .husky/ pre-commit hook exists (+15)
+- package.json has lint-staged configured (+10)
+- CI/CD workflow (.github/workflows/) runs lint+test (+15)
+- vitest.config / jest.config has coverage thresholds enforced (+15)
+Cap at 100.
+
+### gc (0–100): How well is automated cleanup configured?
+Score each signal present and sum:
+- vercel.json has crons defined (+25)
+- .github/workflows/ has scheduled cleanup job (+25)
+- Makefile or scripts have cleanup targets (+15)
+- CLAUDE.md documents cleanup procedures (+15)
+- .claude/hooks/ has post-session cleanup hooks (+20)
+Cap at 100.
+
+## Recommendation rules
+- Only recommend what is MISSING or WEAK based on the files provided
+- Each action must name the exact file to create or modify
+- Return 2–5 recommendations, most impactful first
+- Return ONLY the JSON, no other text
 
 HARNESS FILES:
 ${fileContents}`

@@ -8,6 +8,7 @@ import { eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 
 const HARNESS_FILE_MATCHERS = [
+  // Claude Code 핵심 파일
   (p: string) => p === 'CLAUDE.md',
   (p: string) => p.startsWith('skills/') && p.endsWith('.md'),
   (p: string) => p.startsWith('hooks/'),
@@ -15,6 +16,16 @@ const HARNESS_FILE_MATCHERS = [
   (p: string) => p.startsWith('.claude/hooks/'),
   (p: string) => p === '.claude/settings.json',
   (p: string) => p === 'settings.json',
+  // 자동강제 — git hooks, CI/CD
+  (p: string) => p.startsWith('.husky/'),
+  (p: string) => p.startsWith('.github/workflows/') && (p.endsWith('.yml') || p.endsWith('.yaml')),
+  (p: string) => p === '.pre-commit-config.yaml',
+  // 자동강제 — 테스트/린트 설정
+  (p: string) => ['vitest.config.ts', 'vitest.config.js', 'jest.config.ts', 'jest.config.js'].includes(p),
+  (p: string) => p === 'package.json',
+  // 가비지컬렉션 — 스케줄/자동화
+  (p: string) => p === 'vercel.json',
+  (p: string) => p === 'Makefile',
 ]
 
 async function getGitHubToken(): Promise<string | null> {
