@@ -3,18 +3,23 @@ export const dynamic = 'force-dynamic'
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import { db } from '@/lib/db'
-import { projects, users } from '@/lib/db/schema'
+import { projects, users, apiKeys } from '@/lib/db/schema'
 import { eq } from 'drizzle-orm'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { ApiKeysPanel } from '@/components/api-keys-panel'
 
 export default async function DashboardPage() {
   const { userId: clerkId } = await auth()
 
   const [user] = await db.select().from(users).where(eq(users.clerkId, clerkId!)).limit(1)
-  const userProjects = user
-    ? await db.select().from(projects).where(eq(projects.userId, user.id))
-    : []
+  const [userProjects, userApiKeys] = await Promise.all([
+    user ? db.select().from(projects).where(eq(projects.userId, user.id)) : Promise.resolve([]),
+    user
+      ? db.select({ id: apiKeys.id, name: apiKeys.name, keyPrefix: apiKeys.keyPrefix, lastUsedAt: apiKeys.lastUsedAt, createdAt: apiKeys.createdAt })
+          .from(apiKeys).where(eq(apiKeys.userId, user.id)).orderBy(apiKeys.createdAt)
+      : Promise.resolve([]),
+  ])
 
   if (userProjects.length === 1) redirect(`/projects/${userProjects[0].id}`)
 
@@ -38,6 +43,10 @@ export default async function DashboardPage() {
           ))}
         </div>
       )}
+
+      <div className="mt-12 border-t border-border pt-8">
+        <ApiKeysPanel initialKeys={userApiKeys} />
+      </div>
     </div>
   )
 }

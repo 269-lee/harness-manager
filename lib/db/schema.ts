@@ -45,6 +45,16 @@ export const harnessVersions = pgTable('harness_versions', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
 })
 
+export const apiKeys = pgTable('api_keys', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  name: text('name').notNull(),
+  keyHash: text('key_hash').notNull().unique(),
+  keyPrefix: text('key_prefix').notNull(),
+  lastUsedAt: timestamp('last_used_at'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+})
+
 export type Recommendation = {
   priority: 'urgent' | 'high' | 'medium'
   category: 'context' | 'enforcement' | 'gc'
