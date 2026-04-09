@@ -74,7 +74,8 @@ export async function POST(req: NextRequest) {
     })
   } catch (err) {
     console.error('[api-keys POST]', err)
-    return NextResponse.json({ error: 'API Key 생성에 실패했습니다.' }, { status: 500 })
+    const msg = err instanceof Error ? err.message : String(err)
+    return NextResponse.json({ error: `[DEBUG] ${msg}` }, { status: 500 })
   }
 }
 
