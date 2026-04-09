@@ -9,8 +9,8 @@ type ApiKey = {
   id: string
   name: string
   keyPrefix: string
-  lastUsedAt: Date | null
-  createdAt: Date
+  lastUsedAt: string | null
+  createdAt: string
 }
 
 export function ApiKeysPanel({ initialKeys }: { initialKeys: ApiKey[] }) {
@@ -29,7 +29,7 @@ export function ApiKeysPanel({ initialKeys }: { initialKeys: ApiKey[] }) {
         setNewKey(key)
         setKeys((prev) => [
           ...prev,
-          { id: crypto.randomUUID(), name: name.trim(), keyPrefix: prefix, lastUsedAt: null, createdAt: new Date() },
+          { id: crypto.randomUUID(), name: name.trim(), keyPrefix: prefix, lastUsedAt: null, createdAt: new Date().toISOString() },
         ])
         setName('')
       } catch (err) {
@@ -124,6 +124,7 @@ export function ApiKeysPanel({ initialKeys }: { initialKeys: ApiKey[] }) {
                   {k.lastUsedAt ? `마지막 사용: ${new Date(k.lastUsedAt).toLocaleDateString('ko')}` : '미사용'}
                   {' · '}생성: {new Date(k.createdAt).toLocaleDateString('ko')}
                 </p>
+
               </div>
               <Button
                 variant="ghost"

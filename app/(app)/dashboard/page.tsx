@@ -18,17 +18,22 @@ export default async function DashboardPage() {
     ? await db.select().from(projects).where(eq(projects.userId, user.id))
     : []
 
-  type ApiKeyRow = { id: string; name: string; keyPrefix: string; lastUsedAt: Date | null; createdAt: Date }
+  type ApiKeyRow = { id: string; name: string; keyPrefix: string; lastUsedAt: string | null; createdAt: string }
   let userApiKeys: ApiKeyRow[] = []
   if (user) {
     try {
-      userApiKeys = await db
+      const rows = await db
         .select({ id: apiKeys.id, name: apiKeys.name, keyPrefix: apiKeys.keyPrefix, lastUsedAt: apiKeys.lastUsedAt, createdAt: apiKeys.createdAt })
         .from(apiKeys)
         .where(eq(apiKeys.userId, user.id))
         .orderBy(apiKeys.createdAt)
+      userApiKeys = rows.map((r) => ({
+        ...r,
+        lastUsedAt: r.lastUsedAt?.toISOString() ?? null,
+        createdAt: r.createdAt.toISOString(),
+      }))
     } catch {
-      // api_keys 테이블이 아직 마이그레이션되지 않은 경우 무시
+      // api_keys 테이블이 마이그레이션되지 않은 경우 무시
     }
   }
 
