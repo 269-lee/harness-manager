@@ -3,7 +3,6 @@
 import { useState, useTransition } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { createApiKey, revokeApiKey } from '@/actions/api-keys'
 
 type ApiKey = {
   id: string
@@ -25,12 +24,18 @@ export function ApiKeysPanel({ initialKeys }: { initialKeys: ApiKey[] }) {
     setError(null)
     startTransition(async () => {
       try {
-        const { key, prefix } = await createApiKey(name.trim())
-        setNewKey(key)
-        setKeys((prev) => [
-          ...prev,
-          { id: crypto.randomUUID(), name: name.trim(), keyPrefix: prefix, lastUsedAt: null, createdAt: new Date().toISOString() },
-        ])
+        const res = await fetch('/api/api-keys', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: name.trim() }),
+        })
+        if (!res.ok) {
+          const data = await res.json() as { error?: string }
+          throw new Error(data.error ?? 'API Key 생성에 실패했습니다.')
+        }
+        const data = await res.json() as { key: string; record: ApiKey }
+        setNewKey(data.key)
+        setKeys((prev) => [...prev, data.record])
         setName('')
       } catch (err) {
         setError(err instanceof Error ? err.message : 'API Key 생성에 실패했습니다.')
@@ -42,7 +47,15 @@ export function ApiKeysPanel({ initialKeys }: { initialKeys: ApiKey[] }) {
     setError(null)
     startTransition(async () => {
       try {
-        await revokeApiKey(keyId)
+        const res = await fetch('/api/api-keys', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: keyId }),
+        })
+        if (!res.ok) {
+          const data = await res.json() as { error?: string }
+          throw new Error(data.error ?? '삭제에 실패했습니다.')
+        }
         setKeys((prev) => prev.filter((k) => k.id !== keyId))
       } catch (err) {
         setError(err instanceof Error ? err.message : '삭제에 실패했습니다.')
@@ -124,7 +137,6 @@ export function ApiKeysPanel({ initialKeys }: { initialKeys: ApiKey[] }) {
                   {k.lastUsedAt ? `마지막 사용: ${new Date(k.lastUsedAt).toLocaleDateString('ko')}` : '미사용'}
                   {' · '}생성: {new Date(k.createdAt).toLocaleDateString('ko')}
                 </p>
-
               </div>
               <Button
                 variant="ghost"
