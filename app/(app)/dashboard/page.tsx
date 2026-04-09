@@ -28,7 +28,9 @@ export default async function DashboardPage() {
         .where(eq(apiKeys.userId, user.id))
         .orderBy(apiKeys.createdAt)
       userApiKeys = rows.map((r) => ({
-        ...r,
+        id: r.id,
+        name: r.name,
+        keyPrefix: r.keyPrefix,
         lastUsedAt: r.lastUsedAt ? new Date(r.lastUsedAt).toISOString() : null,
         createdAt: new Date(r.createdAt).toISOString(),
       }))

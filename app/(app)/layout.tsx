@@ -19,40 +19,44 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   const projectIds = userProjects.map(p => p.id)
 
-  // 각 프로젝트의 현재 filesHash 계산 (프로젝트 페이지와 동일한 기준)
-  const allFiles = projectIds.length > 0
-    ? await db.select({ projectId: harnessFiles.projectId, fileHash: harnessFiles.fileHash })
-        .from(harnessFiles)
-        .where(inArray(harnessFiles.projectId, projectIds))
-    : []
-
-  const filesByProject = new Map<string, { hash: string }[]>()
-  for (const f of allFiles) {
-    const arr = filesByProject.get(f.projectId) ?? []
-    arr.push({ hash: f.fileHash })
-    filesByProject.set(f.projectId, arr)
-  }
-
-  const currentHashes = new Map<string, string>()
-  for (const [projectId, files] of filesByProject) {
-    currentHashes.set(projectId, hashFiles(files))
-  }
-
-  // 현재 hash와 일치하는 분석만 조회
-  const hashValues = [...currentHashes.values()].filter(Boolean)
-  const analyses = hashValues.length > 0
-    ? await db
-        .select({ projectId: harnessAnalyses.projectId, filesHash: harnessAnalyses.filesHash, scores: harnessAnalyses.scores })
-        .from(harnessAnalyses)
-        .where(inArray(harnessAnalyses.projectId, projectIds))
-    : []
-
   const latestScores = new Map<string, number>()
-  for (const a of analyses) {
-    if (a.filesHash === currentHashes.get(a.projectId)) {
-      const avg = Math.round((a.scores.context + a.scores.enforcement + a.scores.gc) / 3)
-      latestScores.set(a.projectId, avg)
+  try {
+    // 각 프로젝트의 현재 filesHash 계산 (프로젝트 페이지와 동일한 기준)
+    const allFiles = projectIds.length > 0
+      ? await db.select({ projectId: harnessFiles.projectId, fileHash: harnessFiles.fileHash })
+          .from(harnessFiles)
+          .where(inArray(harnessFiles.projectId, projectIds))
+      : []
+
+    const filesByProject = new Map<string, { hash: string }[]>()
+    for (const f of allFiles) {
+      const arr = filesByProject.get(f.projectId) ?? []
+      arr.push({ hash: f.fileHash })
+      filesByProject.set(f.projectId, arr)
     }
+
+    const currentHashes = new Map<string, string>()
+    for (const [projectId, files] of filesByProject) {
+      currentHashes.set(projectId, hashFiles(files))
+    }
+
+    // 현재 hash와 일치하는 분석만 조회
+    const hashValues = [...currentHashes.values()].filter(Boolean)
+    const analyses = hashValues.length > 0
+      ? await db
+          .select({ projectId: harnessAnalyses.projectId, filesHash: harnessAnalyses.filesHash, scores: harnessAnalyses.scores })
+          .from(harnessAnalyses)
+          .where(inArray(harnessAnalyses.projectId, projectIds))
+      : []
+
+    for (const a of analyses) {
+      if (a.filesHash === currentHashes.get(a.projectId) && a.scores) {
+        const avg = Math.round((a.scores.context + a.scores.enforcement + a.scores.gc) / 3)
+        latestScores.set(a.projectId, avg)
+      }
+    }
+  } catch {
+    // 스코어 계산 실패해도 레이아웃은 정상 렌더링
   }
 
   const projectsWithScores = userProjects.map(p => ({
