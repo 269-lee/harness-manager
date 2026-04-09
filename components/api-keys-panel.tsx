@@ -17,25 +17,36 @@ export function ApiKeysPanel({ initialKeys }: { initialKeys: ApiKey[] }) {
   const [keys, setKeys] = useState(initialKeys)
   const [name, setName] = useState('')
   const [newKey, setNewKey] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
 
   function handleCreate() {
     if (!name.trim()) return
+    setError(null)
     startTransition(async () => {
-      const { key, prefix } = await createApiKey(name.trim())
-      setNewKey(key)
-      setKeys((prev) => [
-        ...prev,
-        { id: crypto.randomUUID(), name: name.trim(), keyPrefix: prefix, lastUsedAt: null, createdAt: new Date() },
-      ])
-      setName('')
+      try {
+        const { key, prefix } = await createApiKey(name.trim())
+        setNewKey(key)
+        setKeys((prev) => [
+          ...prev,
+          { id: crypto.randomUUID(), name: name.trim(), keyPrefix: prefix, lastUsedAt: null, createdAt: new Date() },
+        ])
+        setName('')
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'API Key 생성에 실패했습니다.')
+      }
     })
   }
 
   function handleRevoke(keyId: string) {
+    setError(null)
     startTransition(async () => {
-      await revokeApiKey(keyId)
-      setKeys((prev) => prev.filter((k) => k.id !== keyId))
+      try {
+        await revokeApiKey(keyId)
+        setKeys((prev) => prev.filter((k) => k.id !== keyId))
+      } catch (err) {
+        setError(err instanceof Error ? err.message : '삭제에 실패했습니다.')
+      }
     })
   }
 
@@ -61,6 +72,10 @@ export function ApiKeysPanel({ initialKeys }: { initialKeys: ApiKey[] }) {
           생성
         </Button>
       </div>
+
+      {error && (
+        <p className="text-sm text-destructive">{error}</p>
+      )}
 
       {/* 새로 생성된 키 표시 */}
       {newKey && (

@@ -5,7 +5,6 @@ import { db } from '@/lib/db'
 import { apiKeys, users } from '@/lib/db/schema'
 import { auth } from '@clerk/nextjs/server'
 import { eq, and } from 'drizzle-orm'
-import { revalidatePath } from 'next/cache'
 
 async function getUserId(): Promise<string> {
   const { userId: clerkId } = await auth()
@@ -28,7 +27,6 @@ export async function createApiKey(name: string): Promise<{ key: string; prefix:
   const keyPrefix = raw.slice(0, 16) + '...'
 
   await db.insert(apiKeys).values({ userId, name, keyHash, keyPrefix })
-  revalidatePath('/dashboard')
 
   return { key: raw, prefix: keyPrefix }
 }
@@ -45,5 +43,4 @@ export async function listApiKeys() {
 export async function revokeApiKey(keyId: string) {
   const userId = await getUserId()
   await db.delete(apiKeys).where(and(eq(apiKeys.id, keyId), eq(apiKeys.userId, userId)))
-  revalidatePath('/dashboard')
 }
