@@ -106,11 +106,12 @@ export function ApiKeysPanel({ initialKeys }: { initialKeys: ApiKey[] }) {
         <div className="rounded-md border bg-muted/30 p-4 space-y-2">
           <p className="text-sm font-medium">Claude Code 연결 방법</p>
           <p className="text-xs text-muted-foreground">
-            <code>~/.claude/settings.json</code>에 추가:
+            <code>~/.claude/.mcp.json</code>에 추가:
           </p>
           <pre className="text-xs font-mono bg-background rounded p-3 overflow-x-auto">{`{
   "mcpServers": {
     "harness-coach": {
+      "type": "http",
       "url": "${typeof window !== 'undefined' ? window.location.origin : 'https://your-app.vercel.app'}/api/mcp",
       "headers": { "Authorization": "Bearer <your-key>" }
     }
