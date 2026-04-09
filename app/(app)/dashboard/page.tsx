@@ -18,6 +18,7 @@ export default async function DashboardPage() {
     user
       ? db.select({ id: apiKeys.id, name: apiKeys.name, keyPrefix: apiKeys.keyPrefix, lastUsedAt: apiKeys.lastUsedAt, createdAt: apiKeys.createdAt })
           .from(apiKeys).where(eq(apiKeys.userId, user.id)).orderBy(apiKeys.createdAt)
+          .catch(() => [])
       : Promise.resolve([]),
   ])
 
