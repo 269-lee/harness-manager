@@ -74,8 +74,8 @@ export async function POST(req: NextRequest) {
     })
   } catch (err) {
     console.error('[api-keys POST]', err)
-    const msg = err instanceof Error ? err.message : String(err)
-    return NextResponse.json({ error: `[DEBUG] ${msg}` }, { status: 500 })
+    const detail = JSON.stringify(err, Object.getOwnPropertyNames(err as object))
+    return NextResponse.json({ error: `[DEBUG] ${detail}` }, { status: 500 })
   }
 }
 
