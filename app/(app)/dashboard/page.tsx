@@ -13,14 +13,24 @@ export default async function DashboardPage() {
   const { userId: clerkId } = await auth()
 
   const [user] = await db.select().from(users).where(eq(users.clerkId, clerkId!)).limit(1)
-  const [userProjects, userApiKeys] = await Promise.all([
-    user ? db.select().from(projects).where(eq(projects.userId, user.id)) : Promise.resolve([]),
-    user
-      ? db.select({ id: apiKeys.id, name: apiKeys.name, keyPrefix: apiKeys.keyPrefix, lastUsedAt: apiKeys.lastUsedAt, createdAt: apiKeys.createdAt })
-          .from(apiKeys).where(eq(apiKeys.userId, user.id)).orderBy(apiKeys.createdAt)
-          .catch(() => [])
-      : Promise.resolve([]),
-  ])
+
+  const userProjects = user
+    ? await db.select().from(projects).where(eq(projects.userId, user.id))
+    : []
+
+  type ApiKeyRow = { id: string; name: string; keyPrefix: string; lastUsedAt: Date | null; createdAt: Date }
+  let userApiKeys: ApiKeyRow[] = []
+  if (user) {
+    try {
+      userApiKeys = await db
+        .select({ id: apiKeys.id, name: apiKeys.name, keyPrefix: apiKeys.keyPrefix, lastUsedAt: apiKeys.lastUsedAt, createdAt: apiKeys.createdAt })
+        .from(apiKeys)
+        .where(eq(apiKeys.userId, user.id))
+        .orderBy(apiKeys.createdAt)
+    } catch {
+      // api_keys 테이블이 아직 마이그레이션되지 않은 경우 무시
+    }
+  }
 
   if (userProjects.length === 1) redirect(`/projects/${userProjects[0].id}`)
 
