@@ -131,6 +131,7 @@ export function parseAnalysisResponse(raw: string, tokenUsage: TokenUsage | null
   }
 }
 
+/* c8 ignore start */
 export async function analyzeHarness(fileContents: string): Promise<AnalysisResult> {
   const { text, usage } = await generateText({
     // Routed via Vercel AI Gateway (OIDC). vercel env pull provisions the token.
@@ -154,3 +155,4 @@ export async function analyzeHarness(fileContents: string): Promise<AnalysisResu
 
   return parseAnalysisResponse(text, tokenUsage)
 }
+/* c8 ignore end */
