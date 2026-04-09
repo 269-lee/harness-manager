@@ -13,6 +13,17 @@ export interface AnalysisResult {
   tokenUsage: TokenUsage | null
 }
 
+export interface ImprovedFile {
+  path: string
+  content: string
+  change_summary: string
+}
+
+export interface ImprovementResult {
+  summary: string
+  improved_files: ImprovedFile[]
+}
+
 export function buildAnalysisPrompt(fileContents: string): string {
   return `You are a harness engineering expert for Claude Code. Analyze ALL provided files and return ONLY a JSON object.
 
@@ -128,6 +139,55 @@ export function parseAnalysisResponse(raw: string, tokenUsage: TokenUsage | null
       action: r.action,
     })),
     tokenUsage,
+  }
+}
+
+export function buildImprovementPrompt(
+  files: { path: string; content: string }[],
+  recommendations: { priority: string; title: string; description: string; action?: string }[]
+): string {
+  const fileContents = files.map((f) => `### ${f.path}\n${f.content}`).join('\n\n---\n\n')
+  const recList = recommendations
+    .map((r, i) => `${i}. [${r.priority.toUpperCase()}] ${r.title}: ${r.description}`)
+    .join('\n')
+
+  return `You are a harness engineering expert. Apply the following recommendations to the provided harness files.
+
+## Recommendations to Apply
+${recList}
+
+## Current Files
+${fileContents}
+
+Return ONLY a JSON object with this structure:
+{
+  "summary": "<brief summary of all changes made in Korean>",
+  "improved_files": [
+    {
+      "path": "<exact file path>",
+      "content": "<complete new file content>",
+      "change_summary": "<one-line description of what changed in Korean>"
+    }
+  ]
+}
+
+Rules:
+- Only include files that were actually modified
+- Provide the COMPLETE new content for each modified file (not diffs)
+- If a recommendation requires creating a new file, include it with its full content
+- Return ONLY the JSON, no other text`
+}
+
+export function parseImprovementResponse(raw: string): ImprovementResult {
+  const cleaned = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '').trim()
+  const parsed = JSON.parse(cleaned)
+  return {
+    summary: parsed.summary ?? '',
+    improved_files: (parsed.improved_files ?? []).map((f: ImprovedFile) => ({
+      path: f.path,
+      content: f.content,
+      change_summary: f.change_summary,
+    })),
   }
 }
 
