@@ -215,4 +215,22 @@ export async function analyzeHarness(fileContents: string): Promise<AnalysisResu
 
   return parseAnalysisResponse(text, tokenUsage)
 }
+
+export async function generateImprovedFiles(
+  files: { path: string; content: string }[],
+  recommendations: Recommendation[]
+): Promise<ImprovementResult> {
+  const { text, usage } = await generateText({
+    model: 'anthropic/claude-haiku-4.5' as Parameters<typeof generateText>[0]['model'],
+    prompt: buildImprovementPrompt(files, recommendations),
+  })
+
+  const inputTokens = usage.inputTokens ?? 0
+  const outputTokens = usage.outputTokens ?? 0
+  const estimatedCostUsd =
+    (inputTokens / 1_000_000) * 0.8 + (outputTokens / 1_000_000) * 4.0
+  console.log(`[AI] improve tokens=${inputTokens + outputTokens}, est_cost=$${estimatedCostUsd.toFixed(5)}`)
+
+  return parseImprovementResponse(text)
+}
 /* c8 ignore end */
