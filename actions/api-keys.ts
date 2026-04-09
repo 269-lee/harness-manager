@@ -10,9 +10,15 @@ import { revalidatePath } from 'next/cache'
 async function getUserId(): Promise<string> {
   const { userId: clerkId } = await auth()
   if (!clerkId) throw new Error('Unauthorized')
-  const [user] = await db.select({ id: users.id }).from(users).where(eq(users.clerkId, clerkId)).limit(1)
-  if (!user) throw new Error('User not found')
-  return user.id
+
+  const [existing] = await db.select({ id: users.id }).from(users).where(eq(users.clerkId, clerkId)).limit(1)
+  if (existing) return existing.id
+
+  const { currentUser } = await import('@clerk/nextjs/server')
+  const clerkUser = await currentUser()
+  const email = clerkUser?.emailAddresses[0]?.emailAddress ?? ''
+  const [created] = await db.insert(users).values({ clerkId, email }).returning({ id: users.id })
+  return created.id
 }
 
 export async function createApiKey(name: string): Promise<{ key: string; prefix: string }> {
