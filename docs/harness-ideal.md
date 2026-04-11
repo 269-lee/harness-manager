@@ -74,6 +74,15 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20260411.1] 2026-04-11 | Hacker News | context | Claude Code의 복잡한 엔지니어링 작업 실패: 컨텍스트 부족 및 작업 분해 능력 제한
+  → Layer 1 필수 요소에 'task-decomposition.md' 추가: 프로젝트 복잡도(LOC, 모듈 수, 의존성 깊이)를 CLAUDE.md에 명시하고, 100+ 모듈 또는 3단계 이상 의존성을 가진 프로젝트는 작업 분해 가이드 필수 포함하도록 강제
+- [v20260411.2] 2026-04-11 | Hacker News | context | Vercel 플러그인의 프롬프트 텔레메트리 수집: 사용자 데이터 노출 위험
+  → Layer 1 필수 요소에 'SECURITY.md' 추가: 타사 플러그인/IDE 확장/CI 통합 도구 사용 시 데이터 수집 범위를 명시하고, 프롬프트·코드·토큰 수집 제외 설정을 문서화하도록 필수화
+- [v20260411.3] 2026-04-11 | Hacker News | context | 로컬 LLM(Gemma 4) + Claude Code 통합: MCP 및 로컬 에이전트 연동 패턴
+  → Layer 1에 '.claude/integrations.md' 옵션 항목 추가: MCP 서버, 로컬 LLM 모델, 커스텀 에이전트 연동 시 설정 예시, 성능 기준(레이턴시, 비용), 폴백 전략 문서화 가이드
+- [v20260411.4] 2026-04-11 | 유저 피드백 | enforcement | MCP 서버 정의 및 테스트 검증 필요성 확인
+  → Layer 2 '.claude/settings.json hooks' 상세 기준에 추가: PreToolUse hook에서 MCP 호출 전 (1) 스키마 검증, (2) 권한 범위 확인, (3) 재시도 정책 설정을 강제하는 검사 항목 명시
+
 - [v20260411.1] 2026-04-11 | Hacker News | context | Claude Code의 복잡한 엔지니어링 작업 실패 사례 분석
   → Layer 1에 '프로젝트 복잡도 평가' 기준 추가: CLAUDE.md에서 프로젝트 스코프(LOC, 모듈 수, 의존성 깊이)를 명시하고, 복잡한 작업은 '작업 분해 가이드(task-decomposition.md)' 필수 포함
 - [v20260411.2] 2026-04-11 | Hacker News | context | 보안 이슈: Vercel 플러그인의 프롬프트 텔레메트리 수집 문제
