@@ -45,6 +45,26 @@ describe('parseAnalysisResponse', () => {
     expect(result.scores.context).toBe(100)
     expect(result.scores.enforcement).toBe(0)
   })
+
+  it('scores 키가 없으면 모두 0으로 기본값 처리한다', () => {
+    const raw = JSON.stringify({ recommendations: [] })
+    const result = parseAnalysisResponse(raw)
+    expect(result.scores.context).toBe(0)
+    expect(result.scores.enforcement).toBe(0)
+    expect(result.scores.gc).toBe(0)
+  })
+
+  it('recommendations 키가 없으면 빈 배열로 기본값 처리한다', () => {
+    const raw = JSON.stringify({ scores: { context: 50, enforcement: 50, gc: 50 } })
+    const result = parseAnalysisResponse(raw)
+    expect(result.recommendations).toEqual([])
+  })
+
+  it('마크다운 코드펜스를 제거한다', () => {
+    const raw = '```json\n' + JSON.stringify({ scores: { context: 70, enforcement: 70, gc: 70 }, recommendations: [] }) + '\n```'
+    const result = parseAnalysisResponse(raw)
+    expect(result.scores.context).toBe(70)
+  })
 })
 
 describe('buildImprovementPrompt', () => {
@@ -98,5 +118,11 @@ describe('parseImprovementResponse', () => {
     const raw = JSON.stringify({ summary: 'ok' })
     const result = parseImprovementResponse(raw)
     expect(result.improved_files).toEqual([])
+  })
+
+  it('summary 키가 없으면 빈 문자열로 기본값 처리한다', () => {
+    const raw = JSON.stringify({ improved_files: [] })
+    const result = parseImprovementResponse(raw)
+    expect(result.summary).toBe('')
   })
 })

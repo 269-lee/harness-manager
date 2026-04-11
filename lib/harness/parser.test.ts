@@ -32,6 +32,13 @@ describe('parseHarnessFromMap', () => {
     expect(result.settings).not.toBeNull()
   })
 
+  it('루트 settings.json을 파싱한다', () => {
+    const files = new Map([['settings.json', '{}']])
+    const result = parseHarnessFromMap(files)
+    expect(result.settings).not.toBeNull()
+    expect(result.settings?.path).toBe('settings.json')
+  })
+
   it('.claude/skills/ 경로의 파일을 파싱한다', () => {
     const files = new Map([['.claude/skills/coding.md', '# Coding skill']])
     const result = parseHarnessFromMap(files)
