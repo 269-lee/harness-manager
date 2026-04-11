@@ -2,7 +2,7 @@ name: Evolve Harness Ideal
 
 on:
   schedule:
-    - cron: '0 2 * * 3'  # 매주 수요일 오전 2시 (UTC)
+    - cron: '0 15 * * 6'  # 매주 일요일 자정 KST (= 토요일 15:00 UTC)
   workflow_dispatch:      # 수동 실행 가능
 
 jobs:

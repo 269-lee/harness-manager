@@ -1,0 +1,33 @@
+name: Optimize Connected Repos
+
+on:
+  schedule:
+    - cron: '0 19 * * 0'  # 매주 월요일 새벽 4시 KST (= 일요일 19:00 UTC)
+  workflow_dispatch:
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install script dependencies
+        run: |
+          mkdir -p /tmp/opt-deps
+          cp scripts/optimize-repos.mjs /tmp/opt-deps/
+          cd /tmp/opt-deps
+          npm init -y
+          npm install @neondatabase/serverless
+
+      - name: Run optimization loop
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          HARNESS_API_URL: https://harness-manager.vercel.app/api/mcp
+          HARNESS_API_KEY: ${{ secrets.HARNESS_API_KEY }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: cd /tmp/opt-deps && node optimize-repos.mjs
