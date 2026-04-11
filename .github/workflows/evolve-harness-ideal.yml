@@ -1,0 +1,39 @@
+name: Evolve Harness Ideal
+
+on:
+  schedule:
+    - cron: '0 2 * * 3'  # 매주 수요일 오전 2시 (UTC)
+  workflow_dispatch:      # 수동 실행 가능
+
+jobs:
+  evolve:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run evolution script
+        env:
+          DATABASE_URL_UNPOOLED: ${{ secrets.DATABASE_URL_UNPOOLED }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/evolve-harness-ideal.mjs
+
+      - name: Commit if changed
+        run: |
+          git config user.name "harness-coach[bot]"
+          git config user.email "harness-coach[bot]@users.noreply.github.com"
+          git diff --quiet docs/harness-ideal.md || (
+            git add docs/harness-ideal.md &&
+            git commit -m "chore: evolve harness-ideal.md [$(date +%Y-%m-%d)]" &&
+            git push
+          )

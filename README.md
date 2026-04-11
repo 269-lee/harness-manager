@@ -195,28 +195,34 @@ Harness Coach는 매주 수요일 자동으로 **진화 레이어(Evolution Laye
 ### 동작 방식
 
 ```
-HN Algolia API 수집 → Claude ACCEPT/REJECT 판단 → harness-ideal.md 진화 레이어 업데이트
+HN Algolia API 수집 ─┐
+                      ├→ Claude ACCEPT/REJECT 판단 → harness-ideal.md 진화 레이어 업데이트
+유저 피드백 DB 수집 ──┘
 ```
 
-**1. 수집** — Hacker News에서 최근 7일치 게시물을 자동 수집합니다.
+**1. 수집** — 두 가지 소스에서 최근 7일치를 자동 수집합니다.
+
+**Hacker News** — Algolia API 기반, points ≥ 50인 게시물만 대상
 
 | 수집 키워드 |
 |------------|
 | `claude code` / `CLAUDE.md` / `claude hooks` |
 | `llm agent harness` / `ai agent configuration` / `coding agent workflow` |
 
-points ≥ 50인 게시물만 대상으로 합니다 (커뮤니티 검증 완료).
+**유저 피드백** — MCP 도구(`submit_feedback`) 또는 웹 앱을 통해 수집된 실사용자 의견
 
-**2. 판단** — Claude가 각 게시물을 ACCEPT / REJECT 합니다.
+> MCP 연결 상태에서 Claude Code로 Harness Coach 도구를 사용하다가 불편함·개선 아이디어를 자연스럽게 말하면 자동으로 수집됩니다.
+
+**2. 판단** — Claude가 각 항목을 ACCEPT / REJECT 합니다.
 
 | 수용 기준 | 거부 기준 |
 |----------|----------|
-| 구체적 기법·설정 예시 포함 | 의견·홍보성 글 |
+| 구체적 기법·설정 예시 또는 실제 사용 경험 포함 | 의견·홍보성 글, 단순 칭찬 |
 | 즉시 적용 가능한 패턴 | 이미 반영된 내용 |
 | 3축 중 하나를 실질적으로 개선 | 특정 유료 도구 의존 |
 | harness-ideal.md에 없는 신규 내용 | 검증되지 않거나 보안 위험 |
 
-**3. 업데이트** — ACCEPT된 내용은 버전·날짜·반영 이유와 함께 기록됩니다. REJECT만 있으면 파일을 수정하지 않습니다.
+**3. 업데이트** — ACCEPT된 내용은 버전·날짜·출처·반영 이유와 함께 기록됩니다. REJECT만 있으면 파일을 수정하지 않습니다.
 
 ### 결과
 
