@@ -144,15 +144,20 @@ export function parseAnalysisResponse(raw: string, tokenUsage: TokenUsage | null
 
 export function buildImprovementPrompt(
   files: { path: string; content: string }[],
-  recommendations: Recommendation[]
+  recommendations: Recommendation[],
+  weeklyContext?: string
 ): string {
   const fileContents = files.map((f) => `### ${f.path}\n${f.content}`).join('\n\n---\n\n')
   const recList = recommendations
     .map((r, i) => `${i}. [${r.priority.toUpperCase()}] ${r.title}: ${r.description}`)
     .join('\n')
 
-  return `You are a harness engineering expert. Apply the following recommendations to the provided harness files.
+  const contextSection = weeklyContext
+    ? `\n## Developer's Weekly Context (use this to personalize improvements)\n${weeklyContext}\n`
+    : ''
 
+  return `You are a harness engineering expert. Apply the following recommendations to the provided harness files.
+${contextSection}
 ## Recommendations to Apply
 ${recList}
 
@@ -175,6 +180,7 @@ Rules:
 - Only include files that were actually modified
 - Provide the COMPLETE new content for each modified file (not diffs)
 - If a recommendation requires creating a new file, include it with its full content
+- If weekly context is provided, use it to personalize skill files and CLAUDE.md content to match the developer's actual work patterns
 - Return ONLY the JSON, no other text`
 }
 
@@ -218,11 +224,12 @@ export async function analyzeHarness(fileContents: string): Promise<AnalysisResu
 
 export async function generateImprovedFiles(
   files: { path: string; content: string }[],
-  recommendations: Recommendation[]
+  recommendations: Recommendation[],
+  weeklyContext?: string
 ): Promise<ImprovementResult> {
   const { text, usage } = await generateText({
     model: 'anthropic/claude-haiku-4.5' as Parameters<typeof generateText>[0]['model'],
-    prompt: buildImprovementPrompt(files, recommendations),
+    prompt: buildImprovementPrompt(files, recommendations, weeklyContext),
   })
 
   const inputTokens = usage.inputTokens ?? 0

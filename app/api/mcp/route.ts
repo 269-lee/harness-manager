@@ -169,6 +169,10 @@ githubRepoUrl이 제공되지 않으면 현재 디렉토리에서 \`git remote g
             required: ['priority', 'title', 'description'],
           },
         },
+        weekly_context: {
+          type: 'string',
+          description: '.claude/weekly-context.md 파일 내용. 개발자의 실제 작업 패턴을 반영해 맞춤형 개선을 생성합니다.',
+        },
       },
     },
   },
@@ -276,6 +280,7 @@ async function callTool(name: string, args: unknown, userId: string): Promise<un
       applyIndex: z.number().int().min(0).optional(),
       files: z.array(FileSchema).optional(),
       recommendations: z.array(RecSchema).optional(),
+      weekly_context: z.string().optional(),
     }).parse(args)
 
     // 루프 모드: files + recommendations 직접 제공
@@ -284,7 +289,7 @@ async function callTool(name: string, args: unknown, userId: string): Promise<un
       if (recs.length === 0) {
         return { content: [{ type: 'text', text: '🎉 개선 사항이 없습니다. 하네스가 훌륭합니다!' }] }
       }
-      const result = await generateImprovedFiles(parsed.files, recs)
+      const result = await generateImprovedFiles(parsed.files, recs, parsed.weekly_context)
       const text = [
         `## 하네스 개선 완료`,
         '',

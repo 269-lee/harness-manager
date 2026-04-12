@@ -12,7 +12,7 @@
  */
 
 import { execSync } from 'child_process'
-import { mkdirSync, writeFileSync, readFileSync, readdirSync, statSync } from 'fs'
+import { mkdirSync, writeFileSync, readFileSync, readdirSync, statSync, existsSync } from 'fs'
 import { join, relative, dirname } from 'path'
 import { tmpdir } from 'os'
 import { neon } from '@neondatabase/serverless'
@@ -130,7 +130,16 @@ async function optimizeRepo(repoUrl, repoName) {
     return { repoName, before: total, after: total, grade, filesChanged: 0 }
   }
 
-  // 4. 개선 (action 필드 제거 — 페이로드 크기 절감)
+  // 4. weekly-context.md 읽기 (있으면)
+  const weeklyContextPath = join(cloneDir, '.claude', 'weekly-context.md')
+  const weeklyContext = existsSync(weeklyContextPath)
+    ? readFileSync(weeklyContextPath, 'utf-8')
+    : undefined
+  if (weeklyContext) {
+    console.log(`   ✓ weekly-context.md 발견 — 맞춤형 개선 적용`)
+  }
+
+  // 5. 개선 (action 필드 제거 — 페이로드 크기 절감)
   const recs = recommendations.map(r => ({
     priority: r.priority,
     category: r.category ?? 'context',
@@ -139,7 +148,7 @@ async function optimizeRepo(repoUrl, repoName) {
     action: '',
   }))
 
-  const improveRes = await mcpCall('improve_harness', { files, recommendations: recs }, 2)
+  const improveRes = await mcpCall('improve_harness', { files, recommendations: recs, weekly_context: weeklyContext }, 2)
   if (!improveRes.result) {
     console.error(`   ❌ 개선 실패:`, improveRes.error)
     return null
@@ -153,7 +162,7 @@ async function optimizeRepo(repoUrl, repoName) {
     return null
   }
 
-  // 5. 파일 쓰기
+  // 6. 파일 쓰기
   for (const f of improvedFiles) {
     const fullPath = join(cloneDir, f.path)
     mkdirSync(dirname(fullPath), { recursive: true })
@@ -161,7 +170,7 @@ async function optimizeRepo(repoUrl, repoName) {
   }
   console.log(`   ✓ ${improvedFiles.length}개 파일 개선`)
 
-  // 6. 재진단
+  // 7. 재진단
   const afterFiles = collectFiles(cloneDir)
   const diagAfterRes = await mcpCall('diagnose_harness', { files: afterFiles }, 3)
   let afterTotal = total
@@ -170,7 +179,7 @@ async function optimizeRepo(repoUrl, repoName) {
     afterTotal = afterData?.loop_data?.total ?? total
   }
 
-  // 7. 커밋 & 푸시
+  // 8. 커밋 & 푸시
   execSync(`git -C ${cloneDir} config user.name "harness-coach[bot]"`)
   execSync(`git -C ${cloneDir} config user.email "harness-coach[bot]@users.noreply.github.com"`)
   execSync(`git -C ${cloneDir} add -A`)
