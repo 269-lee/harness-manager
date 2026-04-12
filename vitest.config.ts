@@ -6,25 +6,31 @@ export default defineConfig({
   plugins: [react()],
   test: {
     environment: 'jsdom',
+    globals: true,
+    setupFiles: [],
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'json', 'html'],
+      reporter: ['text', 'json', 'html', 'lcov'],
       exclude: [
         'node_modules/',
-        'dist/',
         '.next/',
+        'dist/',
+        '**/*.config.ts',
+        '**/*.d.ts',
+        '**/index.ts',
+        'coverage/',
       ],
       statements: 80,
       branches: 80,
       functions: 80,
       lines: 80,
-      failOnLowCoverage: true,
+      thresholdAutoUpdate: false,
+      all: true,
     },
-    globals: true,
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './'),
+      '@': path.resolve(__dirname, './src'),
     },
   },
 });

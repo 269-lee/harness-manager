@@ -1,5 +1,5 @@
 #!/bin/bash
-# PostSession 훅 — Claude Code exit 시 자동 실행
+# PostSession 훅 — Claude Code 종료 시 자동 실행
 # git log를 수집해서 weekly-context.md에 세션 마커를 남깁니다.
 # Claude가 /session-wrap을 실행하면 이 마커를 보고 내용을 채웁니다.
 
@@ -9,7 +9,8 @@ TIME=$(date +"%H:%M")
 
 # weekly-context.md가 없으면 헤더 생성
 if [ ! -f "$CONTEXT_FILE" ]; then
-  cat > "$CONTEXT_FILE" << HEADER
+  mkdir -p "$(dirname "$CONTEXT_FILE")"
+  cat > "$CONTEXT_FILE" << 'HEADER'
 # Weekly Context
 
 _harness optimize loop가 매주 월요일에 이 파일을 읽어 맞춤형 개선을 합니다._
@@ -40,8 +41,8 @@ SESSION
 # 헤더 뒤에 새 세션 내용 삽입
 head -5 "$CONTEXT_FILE" > "$CONTEXT_FILE.new"
 cat "$TEMP_FILE" >> "$CONTEXT_FILE.new"
-tail -n +6 "$CONTEXT_FILE" >> "$CONTEXT_FILE.new"
+tail -n +6 "$CONTEXT_FILE" >> "$CONTEXT_FILE.new" 2>/dev/null || true
 mv "$CONTEXT_FILE.new" "$CONTEXT_FILE"
 rm "$TEMP_FILE"
 
-echo "[harness] weekly-context.md 업데이트됨 ($DATE)"
+echo "[harness] weekly-context.md 업데이트됨 ($DATE $TIME)"
