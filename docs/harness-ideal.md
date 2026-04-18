@@ -74,6 +74,13 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20260418.1] 2026-04-18 | Hacker News | context | Claude Code Routines: AI 워크플로우 자동화 및 반복 작업 체계화 문서
+  → Layer 1 필수 요소에 '.claude/routines.md' 추가: 반복되는 AI 작업(코드 생성, 테스트, 리뷰, 배포)을 Routine으로 정의하고, 각 Routine별 입력·출력·검증 기준을 명시하도록 강제
+- [v20260418.2] 2026-04-18 | Hacker News | enforcement | Libretto: AI 브라우저 자동화의 결정성(Determinism) 보장 기법
+  → Layer 2 '.claude/settings.json hooks'에 '자동화 신뢰성 검증' 항목 추가: 브라우저·API 자동화 작업 시 (1) 재시도 정책(exponential backoff), (2) 멱등성(idempotency) 검증, (3) 상태 동기화 확인을 PostToolUse hook에서 강제 실행
+- [v20260418.3] 2026-04-18 | Hacker News | context | Stage: AI 코드 리뷰의 인간 개입 및 제어 가능성 프레임워크
+  → Layer 1 필수 요소에 '.claude/review-gates.md' 옵션 추가: 자동 리뷰 통과 조건(코드 복잡도, 파일 변경 규모, 의존성 변경)을 정의하고, 인간 리뷰 필수 단계(보안, 아키텍처, 성능 변경)를 명시하는 가이드
+
 - [v20260411.1] 2026-04-11 | Hacker News | context | Claude Code의 복잡한 엔지니어링 작업 실패: 컨텍스트 부족 및 작업 분해 능력 제한
   → Layer 1 필수 요소에 'task-decomposition.md' 추가: 프로젝트 복잡도(LOC, 모듈 수, 의존성 깊이)를 CLAUDE.md에 명시하고, 100+ 모듈 또는 3단계 이상 의존성을 가진 프로젝트는 작업 분해 가이드 필수 포함하도록 강제
 - [v20260411.2] 2026-04-11 | Hacker News | context | Vercel 플러그인의 프롬프트 텔레메트리 수집: 사용자 데이터 노출 위험
