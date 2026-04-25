@@ -74,6 +74,13 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20260425.1] 2026-04-25 | Hacker News | enforcement | Browser Harness – LLM이 브라우저 작업을 자유롭게 완료할 수 있도록 하는 오픈소스 도구
+  → Layer 2 '.claude/settings.json hooks'에 '브라우저 자동화 안전성 검증' 항목 추가: 브라우저 태스크 실행 시 (1) 도메인 화이트리스트 확인, (2) 클릭/입력 액션 사전 검증, (3) 페이지 상태 변화 모니터링을 PreToolUse/PostToolUse hook에서 강제 실행하는 설정 예시 제공
+- [v20260425.2] 2026-04-25 | Hacker News | context | Agent Vault – 에이전트용 크레덴셜 프록시 및 보안 저장소 (오픈소스)
+  → Layer 1 필수 요소에 'CREDENTIALS.md' 추가: API 키, DB 비밀번호, OAuth 토큰 등을 안전하게 관리하기 위해 (1) 크레덴셜 저장소 구성(Agent Vault 등), (2) 프롬프트에서 민감 정보 제외 방식, (3) 토큰 로테이션 주기를 명시하도록 강제
+- [v20260425.3] 2026-04-25 | Hacker News | enforcement | Claude 4.7이 stop hooks를 무시하는 현상 보고
+  → Layer 2 점수 기준 상세 내용에 '훅 신뢰성 검증' 항목 추가: hooks가 실제로 동작하는지 확인하기 위해 (1) 테스트 케이스로 각 hook 동작 검증, (2) 훅 실패 시 AI 행동 제한 메커니즘, (3) 훅 바이패스 시도 감지 로깅을 CI workflow에 포함하도록 권고
+
 - [v20260418.1] 2026-04-18 | Hacker News | context | Claude Code Routines: AI 워크플로우 자동화 및 반복 작업 체계화 문서
   → Layer 1 필수 요소에 '.claude/routines.md' 추가: 반복되는 AI 작업(코드 생성, 테스트, 리뷰, 배포)을 Routine으로 정의하고, 각 Routine별 입력·출력·검증 기준을 명시하도록 강제
 - [v20260418.2] 2026-04-18 | Hacker News | enforcement | Libretto: AI 브라우저 자동화의 결정성(Determinism) 보장 기법
