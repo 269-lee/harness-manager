@@ -74,6 +74,15 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20260502.1] 2026-05-02 | Hacker News | enforcement | Claude Code가 특정 키워드(OpenClaw)로 거부 또는 추가 비용 청구 현상
+  → Layer 2 '.claude/settings.json hooks'에 '프롬프트 검열 및 바이패스 방지' 항목 추가: AI가 특정 키워드나 요청을 임의로 거부하지 않도록, (1) 금지 패턴 목록의 투명성 확보, (2) 바이패스 시도 로깅, (3) 비용 청구 조건 사전 정의를 PreToolUse hook에서 강제하는 검사 항목 명시
+- [v20260502.2] 2026-05-02 | Hacker News | context | Apple Support 앱에서 실수로 CLAUDE.md 파일 노출
+  → Layer 1 필수 요소에 '.gitignore 및 보안 검사' 강화 항목 추가: CLAUDE.md, CREDENTIALS.md, .claude/ 디렉토리를 CI/CD 파이프라인에서 (1) 실수 커밋 차단, (2) 배포 아티팩트 검사, (3) 민감 파일 제외 규칙을 자동으로 검증하도록 필수화
+- [v20260502.3] 2026-05-02 | Hacker News | enforcement | EvanFlow – TDD 기반 Claude Code 피드백 루프 도구
+  → Layer 2 필수 요소에 '테스트 주도 자동화' 섹션 추가: 자동 코드 생성 후 검증을 위해 (1) 생성된 코드에 대한 자동 테스트 실행 필수, (2) 테스트 통과율을 PR 머지 조건으로 설정, (3) 실패 케이스 자동 수집 및 프롬프트 피드백 루프 구성을 CI workflow에 포함하는 가이드 제공
+- [v20260502.4] 2026-05-02 | Hacker News | context | Agent-desktop – AI 에이전트용 네이티브 데스크톱 자동화 CLI
+  → Layer 1에 '.claude/agent-capabilities.md' 옵션 항목 추가: 데스크톱 자동화, 브라우저 제어, CLI 도구 실행 권한을 명시하고, (1) 접근 가능한 시스템 리소스 화이트리스트, (2) 작업 타입별 필수 승인 프로세스, (3) 로깅 및 감시 방식을 문서화하는 가이드
+
 - [v20260425.1] 2026-04-25 | Hacker News | enforcement | Browser Harness – LLM이 브라우저 작업을 자유롭게 완료할 수 있도록 하는 오픈소스 도구
   → Layer 2 '.claude/settings.json hooks'에 '브라우저 자동화 안전성 검증' 항목 추가: 브라우저 태스크 실행 시 (1) 도메인 화이트리스트 확인, (2) 클릭/입력 액션 사전 검증, (3) 페이지 상태 변화 모니터링을 PreToolUse/PostToolUse hook에서 강제 실행하는 설정 예시 제공
 - [v20260425.2] 2026-04-25 | Hacker News | context | Agent Vault – 에이전트용 크레덴셜 프록시 및 보안 저장소 (오픈소스)
