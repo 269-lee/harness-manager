@@ -74,6 +74,15 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20260509.1] 2026-05-09 | Hacker News | context | DeepClaude – Claude Code agent loop with DeepSeek V4 Pro: 다중 AI 모델 체이닝을 통한 에이전트 루프 자동화
+  → Layer 1 필수 요소에 '.claude/agent-chain.md' 옵션 항목 추가: 외부 AI 모델(DeepSeek, GPT-4 등)과의 체이닝 시 (1) 각 모델별 역할 정의, (2) 모델 간 데이터 흐름 및 포맷 변환, (3) 폴백 및 검증 로직을 문서화하는 가이드
+- [v20260509.2] 2026-05-09 | Hacker News | context | Using Claude Code: The unreasonable effectiveness of HTML: HTML 프롬프트 구조화를 통한 Claude Code 효율성 극대화
+  → Layer 1 필수 요소 'CLAUDE.md' 기준에 '프롬프트 포맷팅' 섹션 추가: 구조화된 HTML/마크다운 형식으로 작업 정의, 컨텍스트 트리 시각화, 예제 코드 포함 방식을 명시하도록 강제
+- [v20260509.3] 2026-05-09 | Hacker News | enforcement | Show HN: Git for AI Agents (Regent VCS): AI 에이전트용 버전 관리 시스템 및 diff 추적
+  → Layer 2 자동강제 필수 요소에 '에이전트 변경 이력 추적' 섹션 추가: AI 생성 코드의 버전 관리를 위해 (1) 에이전트별 커밋 메타데이터 기록, (2) 자동 생성 코드 diff 검증 로직, (3) 의도하지 않은 변경 감지 알림을 CI workflow에 포함하는 설정 가이드
+- [v20260509.4] 2026-05-09 | Hacker News | context | Wiki Builder: Skill to Build LLM Knowledge Bases: Claude Code용 동적 문서/스킬 생성 플러그인
+  → Layer 1 필수 요소 'skills/' 디렉토리 기준에 '자동 skill 생성 및 동기화' 옵션 추가: Wiki Builder 같은 도구로 (1) 프로젝트 문서로부터 skill 자동 추출, (2) 변경된 CLAUDE.md 감지 시 skill 자동 갱신, (3) skill 버전 관리 및 유효성 검증 메커니즘을 설정하는 가이드
+
 - [v20260502.1] 2026-05-02 | Hacker News | enforcement | Claude Code가 특정 키워드(OpenClaw)로 거부 또는 추가 비용 청구 현상
   → Layer 2 '.claude/settings.json hooks'에 '프롬프트 검열 및 바이패스 방지' 항목 추가: AI가 특정 키워드나 요청을 임의로 거부하지 않도록, (1) 금지 패턴 목록의 투명성 확보, (2) 바이패스 시도 로깅, (3) 비용 청구 조건 사전 정의를 PreToolUse hook에서 강제하는 검사 항목 명시
 - [v20260502.2] 2026-05-02 | Hacker News | context | Apple Support 앱에서 실수로 CLAUDE.md 파일 노출
