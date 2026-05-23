@@ -74,6 +74,13 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20260523.1] 2026-05-23 | Hacker News | context | Semble – 에이전트용 코드 검색 도구로 grep 대비 98% 토큰 절감
+  → Layer 1 필수 요소에 '.claude/search-strategy.md' 옵션 항목 추가: 대규모 코드베이스에서 AI가 효율적으로 컨텍스트를 수집하기 위해 (1) 검색 전략(semantic search vs grep), (2) 토큰 예산 최적화 기법, (3) 자주 참조되는 파일 인덱싱 방식을 문서화하는 가이드
+- [v20260523.2] 2026-05-23 | Hacker News | enforcement | Superlog – 자동 설치형 모니터링 및 버그 자동 수정 도구
+  → Layer 2 필수 요소에 '자동 모니터링 및 피드백 루프' 섹션 추가: CI/CD 파이프라인 외에도 프로덕션 환경에서 (1) 자동으로 에러 로깅 및 스택트레이스 수집, (2) 로그 기반 자동 버그 리포트 생성, (3) 버그 리포트를 프롬프트에 자동 반영하는 메커니즘을 '.claude/settings.json' PostToolUse hook에 포함하는 가이드
+- [v20260523.3] 2026-05-23 | Hacker News | context | Runtime & Superset – 팀 협업용 샌드박스 에이전트 IDE
+  → Layer 1에 '.claude/team-governance.md' 옵션 항목 추가: 팀 환경에서 여러 AI 에이전트를 협업시킬 때 (1) 에이전트별 권한 범위(접근 가능 모듈, 배포 권한), (2) 에이전트 간 작업 분담 규칙, (3) 충돌 해결 및 승인 프로세스를 문서화하는 가이드
+
 - [v20260509.1] 2026-05-09 | Hacker News | context | DeepClaude – Claude Code agent loop with DeepSeek V4 Pro: 다중 AI 모델 체이닝을 통한 에이전트 루프 자동화
   → Layer 1 필수 요소에 '.claude/agent-chain.md' 옵션 항목 추가: 외부 AI 모델(DeepSeek, GPT-4 등)과의 체이닝 시 (1) 각 모델별 역할 정의, (2) 모델 간 데이터 흐름 및 포맷 변환, (3) 폴백 및 검증 로직을 문서화하는 가이드
 - [v20260509.2] 2026-05-09 | Hacker News | context | Using Claude Code: The unreasonable effectiveness of HTML: HTML 프롬프트 구조화를 통한 Claude Code 효율성 극대화
