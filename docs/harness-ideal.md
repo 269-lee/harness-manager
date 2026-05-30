@@ -74,6 +74,17 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20260530.1] 2026-05-30 | Hacker News | context | Claude Code 마스터리: Claude.md, Skills, Subagents, Plugins, MCPs 통합 가이드
+  → Layer 1 필수 요소에 '.claude/subagents.md' 추가: 여러 서브에이전트 활용 시 (1) 각 에이전트의 역할·책임 범위, (2) 에이전트 간 통신 프로토콜, (3) 작업 분담 및 결과 통합 방식을 명시하도록 강제
+- [v20260530.2] 2026-05-30 | Hacker News | enforcement | Claude Code 소스 코드 분석: 공식 문서에 미공개된 설정 항목 발굴
+  → Layer 2 '.claude/settings.json hooks' 기준에 '숨겨진 설정 항목' 섹션 추가: 공식 문서 미반영 훅(예: task_priority, context_window_strategy, tool_call_timeout)을 체계적으로 검증하고, 각 항목의 성능 임계값을 정의하는 검사 가이드 제공
+- [v20260530.3] 2026-05-30 | Hacker News | context | Claude Code 동적 워크플로우: 조건부 작업 흐름 및 에이전트 루프 자동화
+  → Layer 1 필수 요소에 '.claude/workflows.md' 추가: 조건부 분기, 병렬 작업, 재시도 로직을 포함한 워크플로우 정의 방식. (1) 워크플로우 상태 머신 정의, (2) 각 단계별 입출력 검증, (3) 실패 시 롤백 전략을 명시하는 가이드
+- [v20260530.4] 2026-05-30 | Hacker News | enforcement | AISlop: AI 생성 코드의 악취(code smells) 자동 감지 CLI 도구
+  → Layer 2 CI workflow 기준에 '코드 품질 정적 분석' 항목 추가: AI 생성 코드의 패턴 인식 오류(과도한 추상화, 미사용 변수, 보일러플레이트)를 감지하는 린터/정적 분석 도구(AISlop 등) 통합. PreToolUse hook에서 생성 직후 검증하고, 통과 실패 시 AI에 피드백을 자동 반영하는 설정
+- [v20260530.5] 2026-05-30 | Hacker News | context | Minicor (YC P26): Windows 데스크톱 자동화 스케일링 플랫폼
+  → Layer 1에 '.claude/desktop-automation.md' 옵션 항목 추가: 데스크톱/OS 레벨 자동화 작업 시 (1) OS 버전·아키텍처별 호환성 검증, (2) 유저 권한 수준(admin/user)과 작업 범위 매핑, (3) 재부팅·시스템 상태 변화에 따른 멱등성 보장 방식을 문서화하는 가이드
+
 - [v20260523.1] 2026-05-23 | Hacker News | context | Semble – 에이전트용 코드 검색 도구로 grep 대비 98% 토큰 절감
   → Layer 1 필수 요소에 '.claude/search-strategy.md' 옵션 항목 추가: 대규모 코드베이스에서 AI가 효율적으로 컨텍스트를 수집하기 위해 (1) 검색 전략(semantic search vs grep), (2) 토큰 예산 최적화 기법, (3) 자주 참조되는 파일 인덱싱 방식을 문서화하는 가이드
 - [v20260523.2] 2026-05-23 | Hacker News | enforcement | Superlog – 자동 설치형 모니터링 및 버그 자동 수정 도구
