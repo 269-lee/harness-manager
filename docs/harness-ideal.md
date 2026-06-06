@@ -74,6 +74,15 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20260606.1] 2026-06-06 | Hacker News | context | Claude Code와 외부 VCS를 Git으로 실시간 동기화하는 협업 패턴
+  → Layer 1 필수 요소에 '.claude/git-sync.md' 옵션 항목 추가: Claude Code와 외부 에이전트(Codex 등)가 Git을 통해 실시간으로 코드 변경을 동기화할 때 (1) 브랜치 전략 및 병합 규칙, (2) 충돌 해결 자동화, (3) 커밋 메시지 포맷 통일을 문서화하는 가이드
+- [v20260606.2] 2026-06-06 | Hacker News | enforcement | 클라우드 환경에서 Claude Code 실행 및 로컬호스트 대체 인프라
+  → Layer 2에 '.claude/execution-environment.md' 옵션 항목 추가: 클라우드(Boxes.dev 등) 또는 컨테이너 환경에서 Claude Code를 실행할 때 (1) 환경 재현성 검증(Docker/Nix), (2) 네트워크 격리 및 접근 제어, (3) 결과물 로컬 다운로드 및 서명 검증 프로세스를 명시하는 가이드
+- [v20260606.3] 2026-06-06 | Hacker News | context | 스탠포드 CS336 AI Agent Guidelines: 공식 교육 기관의 CLAUDE.md 가이드
+  → Layer 1 'CLAUDE.md' 기준에 '학습 목표 및 제약 조건' 섹션 추가: 에이전트 작업의 목표(학습, 프로토타입, 프로덕션)를 명시하고, 각 단계별 허용/금지 작업 범위를 정의하도록 강제. 스탠포드 가이드 링크 참고 자료로 제시
+- [v20260606.4] 2026-06-06 | Hacker News | context | Hyper(YC P26): 기업 지식 기반을 활용한 에이전트 개발 플랫폼
+  → Layer 1 필수 요소에 '.claude/knowledge-base.md' 옵션 항목 추가: 조직의 내부 문서, 정책, 사례(playbook)를 구조화된 형식으로 관리할 때 (1) 지식 베이스 인덱싱 및 검색 전략, (2) 최신성 보장(버전 관리, 폐기 정책), (3) AI 프롬프트에 자동 주입 메커니즘을 명시하는 가이드
+
 - [v20260530.1] 2026-05-30 | Hacker News | context | Claude Code 마스터리: Claude.md, Skills, Subagents, Plugins, MCPs 통합 가이드
   → Layer 1 필수 요소에 '.claude/subagents.md' 추가: 여러 서브에이전트 활용 시 (1) 각 에이전트의 역할·책임 범위, (2) 에이전트 간 통신 프로토콜, (3) 작업 분담 및 결과 통합 방식을 명시하도록 강제
 - [v20260530.2] 2026-05-30 | Hacker News | enforcement | Claude Code 소스 코드 분석: 공식 문서에 미공개된 설정 항목 발굴
