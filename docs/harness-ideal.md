@@ -74,6 +74,15 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20260613.1] 2026-06-13 | Hacker News | enforcement | Claude Code 할당량 모니터링: macOS 메뉴바 게이지로 실시간 API 사용량 추적
+  → Layer 2 '.claude/settings.json hooks'에 '할당량 모니터링' 항목 추가: API 사용량을 실시간으로 추적하고, 할당량 임계값(예: 80%) 도달 시 (1) 자동 알림 발송, (2) 비용 초과 방지 제한, (3) 대안 모델로 자동 페일오버 로직을 PostToolUse hook에서 강제 실행하는 가이드
+- [v20260613.2] 2026-06-13 | Hacker News | context | Lathe: 학습 목표 중심의 LLM 도메인 학습 도구 및 피드백 루프
+  → Layer 1 'CLAUDE.md' 기준에 '학습 목표 정의 및 피드백 루프' 섹션 추가: 에이전트 작업이 단순 자동화를 넘어 도메인 학습을 포함할 경우, (1) 학습 목표 및 성공 기준, (2) 피드백 루프(에러 분석, 개념 학습, 재시도), (3) 학습 진행도 추적 방식을 명시하는 가이드
+- [v20260613.3] 2026-06-13 | Hacker News | enforcement | Intuned: 브라우저 자동화의 신뢰성 보장 및 에러 복구 프레임워크
+  → Layer 2 '.claude/settings.json hooks'에 '브라우저 자동화 신뢰성' 항목 강화: 페이지 로딩 실패, 요소 이동, 네트워크 오류 등 불안정한 상태에서 (1) 자동 재시도 정책(지수 백오프, 최대 시도 횟수), (2) 대체 요소 선택자 준비, (3) 상태 검증 실패 시 이전 상태로 자동 복구하는 설정을 PostToolUse hook에 포함하는 구체적 예시 제공
+- [v20260613.4] 2026-06-13 | Hacker News | context | Command Center: 코드 품질 기준 중심의 AI 개발 환경
+  → Layer 1 필수 요소에 '.claude/quality-standards.md' 옵션 추가: 팀 또는 프로젝트의 코드 품질 기준을 명시하고, (1) 코드 복잡도(순환 복잡도, 라인당 함수), (2) 테스트 커버리지 최소값, (3) 성능 임계값(응답 시간, 메모리 사용)을 정의하여 AI 생성 코드의 검증 기준으로 활용하는 가이드
+
 - [v20260606.1] 2026-06-06 | Hacker News | context | Claude Code와 외부 VCS를 Git으로 실시간 동기화하는 협업 패턴
   → Layer 1 필수 요소에 '.claude/git-sync.md' 옵션 항목 추가: Claude Code와 외부 에이전트(Codex 등)가 Git을 통해 실시간으로 코드 변경을 동기화할 때 (1) 브랜치 전략 및 병합 규칙, (2) 충돌 해결 자동화, (3) 커밋 메시지 포맷 통일을 문서화하는 가이드
 - [v20260606.2] 2026-06-06 | Hacker News | enforcement | 클라우드 환경에서 Claude Code 실행 및 로컬호스트 대체 인프라
