@@ -74,6 +74,15 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20260711.1] 2026-07-11 | Hacker News | context | Geosql: Claude Code용 지리공간 데이터 처리 도메인 스킬
+  → Layer 1 'skills/' 기준에 '도메인별 스킬 예시' 섹션 추가: 지리공간 데이터, 머신러닝, DevOps 등 특정 도메인 작업 시 해당 라이브러리·함수·쿼리 패턴을 사전 정의한 스킬 파일 작성 방식. 각 스킬에 (1) 사용 사례, (2) 금지 패턴, (3) 성능 임계값을 포함하는 템플릿 제공.
+- [v20260711.2] 2026-07-11 | Hacker News | context | The Making of Claude Code: Claude Code 공식 아키텍처 및 설계 원칙 문서
+  → Layer 1 'CLAUDE.md' 기준에 '공식 설계 원칙 참고' 섹션 추가: Anthropic 공식 문서(The Making of Claude Code)에서 제시한 (1) Claude Code의 기술 스택 및 한계, (2) 권장 작업 범위, (3) 에이전트 설계 패턴을 CLAUDE.md 작성 시 참고 자료로 명시.
+- [v20260711.3] 2026-07-11 | Hacker News | enforcement | Rowboat: Claude Desktop 대체 로컬 오픈소스 클라이언트
+  → Layer 2 '.claude/execution-environment.md' 옵션 항목 확장: Claude Desktop 외에 로컬 오픈소스 클라이언트(Rowboat 등) 사용 시 (1) 클라이언트별 hooks 호환성 검증, (2) 로컬 실행 환경의 일관성 보장(Docker/Nix), (3) 공식 Claude Desktop과의 동작 차이점 문서화를 강제하는 가이드.
+- [v20260711.4] 2026-07-11 | Hacker News | context | Context.dev: 구조화된 데이터 추출 API를 통한 웹 자동화 강화
+  → Layer 1 '.claude/data-extraction.md' 옵션 항목 추가: 웹 스크래핑, API 연동 작업 시 구조화된 데이터 추출 전략 문서화. (1) 추출 대상 데이터 스키마 정의, (2) 타사 구조화 API(Context.dev 등) vs 자체 파서 선택 기준, (3) 추출 오류 시 폴백 전략을 명시하는 가이드.
+
 - [v20260613.1] 2026-06-13 | Hacker News | enforcement | Claude Code 할당량 모니터링: macOS 메뉴바 게이지로 실시간 API 사용량 추적
   → Layer 2 '.claude/settings.json hooks'에 '할당량 모니터링' 항목 추가: API 사용량을 실시간으로 추적하고, 할당량 임계값(예: 80%) 도달 시 (1) 자동 알림 발송, (2) 비용 초과 방지 제한, (3) 대안 모델로 자동 페일오버 로직을 PostToolUse hook에서 강제 실행하는 가이드
 - [v20260613.2] 2026-06-13 | Hacker News | context | Lathe: 학습 목표 중심의 LLM 도메인 학습 도구 및 피드백 루프
