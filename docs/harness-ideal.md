@@ -74,6 +74,11 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20260718.1] 2026-07-18 | Hacker News | enforcement | Claude Code의 프롬프트 읽기 전 과도한 토큰 소비 문제 (33k vs OpenCode 7k)
+  → Layer 2 '.claude/settings.json hooks'에 '토큰 효율성 검증' 항목 추가: PreToolUse hook에서 (1) 프롬프트 송신 전 토큰 예산 검증, (2) 불필요한 초기 토큰 소비 감지(33k+ 급증), (3) 토큰 오버헤드 임계값 초과 시 작업 중단 및 알림을 강제 실행하는 설정
+- [v20260718.2] 2026-07-18 | Hacker News | context | Claude Code의 설계 결함 분석: 사용자 의도 불일치 및 제어 불가능성 문제
+  → Layer 1 'CLAUDE.md' 기준에 '에이전트 제어 가능성(controllability) 검증' 섹션 추가: (1) AI의 의도하지 않은 행동 방지 메커니즘, (2) 사용자 의도와 AI 행동의 일관성 확인 기준, (3) 예상 밖의 작업 시작 시 중단 및 승인 프로세스를 명시하는 가이드
+
 - [v20260711.1] 2026-07-11 | Hacker News | context | Geosql: Claude Code용 지리공간 데이터 처리 도메인 스킬
   → Layer 1 'skills/' 기준에 '도메인별 스킬 예시' 섹션 추가: 지리공간 데이터, 머신러닝, DevOps 등 특정 도메인 작업 시 해당 라이브러리·함수·쿼리 패턴을 사전 정의한 스킬 파일 작성 방식. 각 스킬에 (1) 사용 사례, (2) 금지 패턴, (3) 성능 임계값을 포함하는 템플릿 제공.
 - [v20260711.2] 2026-07-11 | Hacker News | context | The Making of Claude Code: Claude Code 공식 아키텍처 및 설계 원칙 문서
