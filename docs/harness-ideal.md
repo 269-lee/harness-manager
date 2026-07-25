@@ -74,6 +74,15 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20260725.1] 2026-07-25 | Hacker News | enforcement | Claude Code가 Bun(Rust 기반)으로 작동 - 런타임 성능 및 호환성 변화
+  → Layer 2 '.claude/execution-environment.md'에 '런타임 환경 검증' 항목 추가: Claude Code의 런타임(Node.js → Bun)이 변경될 경우, (1) 기존 스크립트의 호환성 검증, (2) 성능 임계값(실행 시간, 메모리) 재측정, (3) 런타임 변경에 따른 의존성 업데이트 자동화 규칙을 명시하는 가이드
+- [v20260725.2] 2026-07-25 | Hacker News | context | Mac에서 Claude Code 제어를 위한 단계별 설정 가이드 발행
+  → Layer 1 '.claude/platform-setup.md' 옵션 항목 추가: macOS에서 Claude Code 실행 시 필수 권한 설정(Accessibility, Screen Recording, Full Disk Access)과 각 권한별 (1) 필요 이유, (2) 보안 영향도, (3) 최소 권한 원칙에 따른 설정 방식을 문서화하는 가이드
+- [v20260725.3] 2026-07-25 | Hacker News | context | OneCLI - AI 에이전트용 오픈소스 크레덴셜 게이트웨이 도구 출시
+  → Layer 1 'CREDENTIALS.md' 기준에 '크레덴셜 게이트웨이 패턴' 항목 추가: API 키·DB 비밀번호 관리 시 (1) 프롬프트에 크레덴셜 직접 노출 금지, (2) OneCLI 같은 게이트웨이 도구 사용 패턴, (3) 크레덴셜 주입 시 검증 로직(사용 권한, 작업 범위 제한)을 명시하는 실무 예시 제공
+- [v20260725.4] 2026-07-25 | Hacker News | context | CodeAlmanac - 대화 기반 코드베이스 위키 자동 생성(Karpathy 방식)
+  → Layer 1 'skills/' 기준에 '자동 문서화 및 인덱싱' 항목 강화: CodeAlmanac 같은 도구로 (1) 실시간 코드베이스 대화 분석 → 자동 위키 생성, (2) 변경된 모듈·함수에 대한 skill 자동 갱신, (3) 생성된 문서의 정확도 검증 및 피드백 루프를 구성하는 가이드
+
 - [v20260718.1] 2026-07-18 | Hacker News | enforcement | Claude Code의 프롬프트 읽기 전 과도한 토큰 소비 문제 (33k vs OpenCode 7k)
   → Layer 2 '.claude/settings.json hooks'에 '토큰 효율성 검증' 항목 추가: PreToolUse hook에서 (1) 프롬프트 송신 전 토큰 예산 검증, (2) 불필요한 초기 토큰 소비 감지(33k+ 급증), (3) 토큰 오버헤드 임계값 초과 시 작업 중단 및 알림을 강제 실행하는 설정
 - [v20260718.2] 2026-07-18 | Hacker News | context | Claude Code의 설계 결함 분석: 사용자 의도 불일치 및 제어 불가능성 문제
