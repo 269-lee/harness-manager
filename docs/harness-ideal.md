@@ -74,6 +74,13 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20260801.1] 2026-08-01 | Hacker News | enforcement | Agent-Manager: Claude Code, Codex, OpenCode를 Tmux TUI로 통합 관리
+  → Layer 2 '.claude/settings.json hooks'에 '다중 에이전트 런타임 관리' 항목 추가: 여러 AI 에이전트(Claude Code, Codex, OpenCode)를 동일 환경에서 실행할 때 (1) 에이전트별 프로세스 격리 및 리소스 할당 정책, (2) 실행 순서·동시성 제어, (3) 에이전트 간 상태 동기화 및 실패 시 자동 페일오버를 Tmux 기반 오케스트레이션으로 문서화하는 가이드
+- [v20260801.2] 2026-08-01 | Hacker News | enforcement | Claude-account: 로그인 재입력 없이 Claude Code 계정 전환 도구
+  → Layer 2 '.claude/settings.json hooks'에 '크레덴셜 관리 및 계정 전환' 항목 추가: 여러 Claude 계정을 관리할 때 (1) 활성 계정 상태 실시간 모니터링, (2) 계정 전환 시 자동 세션 정리 및 컨텍스트 초기화, (3) 토큰 누수 방지를 위한 사전 검증을 PostToolUse hook에서 강제하는 설정
+- [v20260801.3] 2026-08-01 | Hacker News | context | What should the GUI for AI agents look like?: AI 에이전트용 UI/UX 설계 논의
+  → Layer 1 'CLAUDE.md' 기준에 '에이전트 제어 인터페이스(Control Interface) 정의' 옵션 항목 추가: AI 에이전트의 의도하지 않은 행동을 방지하기 위해 (1) 사용자가 AI 행동을 실시간으로 모니터링·중단할 수 있는 UI 요구사항, (2) 위험한 작업(파일 삭제, 배포, 결제) 실행 전 명시적 승인 플로우, (3) 작업 예측 및 롤백 기능을 문서화하는 가이드
+
 - [v20260725.1] 2026-07-25 | Hacker News | enforcement | Claude Code가 Bun(Rust 기반)으로 작동 - 런타임 성능 및 호환성 변화
   → Layer 2 '.claude/execution-environment.md'에 '런타임 환경 검증' 항목 추가: Claude Code의 런타임(Node.js → Bun)이 변경될 경우, (1) 기존 스크립트의 호환성 검증, (2) 성능 임계값(실행 시간, 메모리) 재측정, (3) 런타임 변경에 따른 의존성 업데이트 자동화 규칙을 명시하는 가이드
 - [v20260725.2] 2026-07-25 | Hacker News | context | Mac에서 Claude Code 제어를 위한 단계별 설정 가이드 발행
