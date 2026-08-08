@@ -74,6 +74,13 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20260808.1] 2026-08-08 | Hacker News | context | 팀 코딩 표준을 Claude Code와 Codex에 적용하는 Agent Skills 패턴
+  → Layer 1 'skills/' 기준에 '팀 코딩 표준 스킬' 항목 추가: 팀 차원의 코딩 규칙(네이밍, 에러 처리, 로깅, 테스트 작성)을 skills/ 디렉토리의 표준화된 스킬 파일로 정의하고, 여러 AI 에이전트(Claude Code, Codex)가 일관된 기준을 따르도록 강제하는 구조. 각 스킬에 (1) 규칙 설명, (2) 코드 예시, (3) 위반 시 자동 검사 방법을 포함하는 템플릿 제공.
+- [v20260808.2] 2026-08-08 | Hacker News | enforcement | 클라우드 배포 환경에서 Claude Code 에이전트 운영 자동화 (Hoplite)
+  → Layer 2에 '.claude/cloud-deployment.md' 옵션 항목 추가: Claude Code 에이전트를 클라우드에 배포하고 자동으로 운영할 때 (1) 배포 환경 검증(컨테이너 이미지, 환경 변수 주입), (2) 에이전트 생명주기 관리(실행, 모니터링, 종료), (3) 클라우드 자원 할당 및 비용 제한 설정을 CI/CD 파이프라인에서 자동화하는 가이드.
+- [v20260808.3] 2026-08-08 | Hacker News | context | 프로덕션 환경의 읽기 전용 디버깅 에이전트 운영 (HyperProbe)
+  → Layer 1에 '.claude/production-safety.md' 옵션 항목 추가: 프로덕션 환경에서 Claude Code가 버그 분석/디버깅을 수행할 때 (1) 읽기 전용 권한 강제(데이터 변경 금지), (2) 접근 가능한 로그·메트릭 범위 화이트리스트, (3) 위험한 작업(DB 쿼리, 설정 변경) 시도 감지 및 차단 메커니즘을 문서화하는 가이드.
+
 - [v20260801.1] 2026-08-01 | Hacker News | enforcement | Agent-Manager: Claude Code, Codex, OpenCode를 Tmux TUI로 통합 관리
   → Layer 2 '.claude/settings.json hooks'에 '다중 에이전트 런타임 관리' 항목 추가: 여러 AI 에이전트(Claude Code, Codex, OpenCode)를 동일 환경에서 실행할 때 (1) 에이전트별 프로세스 격리 및 리소스 할당 정책, (2) 실행 순서·동시성 제어, (3) 에이전트 간 상태 동기화 및 실패 시 자동 페일오버를 Tmux 기반 오케스트레이션으로 문서화하는 가이드
 - [v20260801.2] 2026-08-01 | Hacker News | enforcement | Claude-account: 로그인 재입력 없이 Claude Code 계정 전환 도구
