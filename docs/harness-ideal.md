@@ -74,6 +74,15 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20260815.1] 2026-08-15 | Hacker News | enforcement | Claude Code 자동 모드(Auto Mode)가 기본값으로 변경됨 - 에이전트 자율성 vs 제어 가능성의 균형 재정의
+  → Layer 2 '.claude/settings.json hooks'에 '자동 모드 제어 정책' 항목 추가: Auto Mode 활성화 시 (1) 자동 실행 허용 범위(파일 수정, 배포 등) 화이트리스트, (2) 위험 작업 자동 실행 금지 임계값 설정, (3) 자동 실행 중단 조건(특정 키워드, 비용 초과)을 PreToolUse hook에서 강제하는 설정 가이드 제공
+- [v20260815.2] 2026-08-15 | Hacker News | context | Claude Code 세션 간 메시지 전달(Cross-Session Messaging) 기능 - 다중 세션 상태 동기화 패턴
+  → Layer 1 필수 요소에 '.claude/session-management.md' 옵션 항목 추가: 여러 Claude Code 세션을 병렬로 운영할 때 (1) 세션 간 상태 동기화 프로토콜(메시지 포맷, 순서 보장), (2) 세션별 컨텍스트 격리 범위(공유 파일, 비공유 파일), (3) 세션 간 충돌 해결 규칙을 문서화하는 가이드
+- [v20260815.3] 2026-08-15 | Hacker News | enforcement | Claude Code 세션 가치 극대화 - 토큰 예산, 작업 우선순위, 결과 검증 실무 가이드
+  → Layer 2 필수 요소에 '세션 효율성 검증' 항목 추가: (1) 세션당 토큰 예산 설정 및 모니터링(PreToolUse hook에서 누적 토큰 추적), (2) 작업 우선순위 기반 스케줄링(고비용 작업 먼저 실행), (3) 세션 종료 전 결과 검증 및 artifact 저장 확인을 PostToolUse hook에서 강제하는 체크리스트 제공
+- [v20260815.4] 2026-08-15 | Hacker News | context | Bullet(YC S26) - 더 빠른 코딩 에이전트 출시, Claude Code와의 성능/비용 비교 필요
+  → Layer 1 'CLAUDE.md' 기준에 '에이전트 선택 기준' 섹션 추가: Claude Code 외에 다른 AI 에이전트 도구 사용 시 (1) 각 에이전트의 강점(속도, 비용, 정확도), (2) 프로젝트 특성별 선택 기준(빠른 프로토타입 vs 안정성 중시), (3) 다중 에이전트 조합 시 작업 분담 규칙을 문서화하는 가이드
+
 - [v20260808.1] 2026-08-08 | Hacker News | context | 팀 코딩 표준을 Claude Code와 Codex에 적용하는 Agent Skills 패턴
   → Layer 1 'skills/' 기준에 '팀 코딩 표준 스킬' 항목 추가: 팀 차원의 코딩 규칙(네이밍, 에러 처리, 로깅, 테스트 작성)을 skills/ 디렉토리의 표준화된 스킬 파일로 정의하고, 여러 AI 에이전트(Claude Code, Codex)가 일관된 기준을 따르도록 강제하는 구조. 각 스킬에 (1) 규칙 설명, (2) 코드 예시, (3) 위반 시 자동 검사 방법을 포함하는 템플릿 제공.
 - [v20260808.2] 2026-08-08 | Hacker News | enforcement | 클라우드 배포 환경에서 Claude Code 에이전트 운영 자동화 (Hoplite)
