@@ -74,6 +74,17 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20260905.1] 2026-09-05 | Hacker News | enforcement | Claude Code Opus 5 Auto Mode 보안 취약점: 자동 실행 모드의 의도하지 않은 행동 분석
+  → Layer 2 '.claude/settings.json hooks'에 'Auto Mode 안전성 검증' 항목 강화: Opus 5 Auto Mode 활성화 시 (1) 자동 실행 전 사용자 의도 재검증 메커니즘, (2) 예상 밖의 파일 수정·배포 감지 및 중단 조건, (3) Auto Mode 바이패스 또는 의도 불일치 탐지 로직을 PreToolUse hook에서 강제하는 구체적 설정 예시 추가
+- [v20260905.2] 2026-09-05 | Hacker News | context | Claude Code 도구 선택 동향 분석: 17k 실행 기반 도구별 성능 비교 데이터
+  → Layer 1 'CLAUDE.md' 기준에 '도구 선택 기준 및 성능 벤치마크' 섹션 추가: 프로젝트의 작업 특성별(웹 개발, 데이터 처리, 인프라)로 Claude Code vs Codex vs Cursor의 적합성을 비교하는 기준 정의. 각 도구별 강점(속도, 정확도, 토큰 효율성)을 CLAUDE.md에 명시하는 가이드
+- [v20260905.3] 2026-09-05 | Hacker News | context | Portal by Spotify: Claude Code 토큰 사용량 90% 감소 기법 공개
+  → Layer 1 '.claude/search-strategy.md' 기준에 '토큰 효율성 최적화 사례' 항목 추가: Spotify Portal 패턴처럼 (1) 불필요한 초기 토큰 로드 제거 방식, (2) 코드베이스 인덱싱 및 지연 로딩 전략, (3) 토큰 예산 대비 결과 품질 검증 메트릭을 구체적 예시와 함께 문서화
+- [v20260905.4] 2026-09-05 | Hacker News | enforcement | Claude Code 세션 URL이 커밋 메시지에 자동 기록됨: 프라이버시 및 감시 위험
+  → Layer 2에 '.claude/session-logging.md' 필수 항목 추가: Claude Code 세션 정보(URL, 메타데이터)가 자동으로 커밋 메시지에 포함되는 현상 대응. (1) 세션 정보 제외 규칙 자동화, (2) pre-commit hook에서 민감 메타데이터 제거 검사, (3) .gitignore에서 .claude/session 자동 제외 설정을 강제하는 가이드
+- [v20260905.5] 2026-09-05 | Hacker News | enforcement | Claude Code 주간 사용량 제한 17% 감소: 할당량 관리 정책 변화
+  → Layer 2 '.claude/settings.json hooks'의 '할당량 모니터링' 항목 강화: 동적 할당량 정책(주간 제한 변화) 대응을 위해 (1) 할당량 임계값 자동 감지 및 갱신, (2) 비용 초과 위험 시 우선순위 기반 작업 스케줄링, (3) 할당량 소진 전 에이전트 자동 일시 중단 메커니즘을 PostToolUse hook에 포함하는 구체적 설정
+
 - [v20260815.1] 2026-08-15 | Hacker News | enforcement | Claude Code 자동 모드(Auto Mode)가 기본값으로 변경됨 - 에이전트 자율성 vs 제어 가능성의 균형 재정의
   → Layer 2 '.claude/settings.json hooks'에 '자동 모드 제어 정책' 항목 추가: Auto Mode 활성화 시 (1) 자동 실행 허용 범위(파일 수정, 배포 등) 화이트리스트, (2) 위험 작업 자동 실행 금지 임계값 설정, (3) 자동 실행 중단 조건(특정 키워드, 비용 초과)을 PreToolUse hook에서 강제하는 설정 가이드 제공
 - [v20260815.2] 2026-08-15 | Hacker News | context | Claude Code 세션 간 메시지 전달(Cross-Session Messaging) 기능 - 다중 세션 상태 동기화 패턴
