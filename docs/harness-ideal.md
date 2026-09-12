@@ -74,6 +74,13 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20260912.1] 2026-09-12 | Hacker News | enforcement | 격리된 VM 환경에서 Claude Code와 Codex를 안전하게 실행하는 Coop 도구
+  → Layer 2 '.claude/execution-environment.md' 항목 강화: Claude Code를 격리된 VM 환경(Coop 등)에서 실행할 때 (1) VM 이미지의 재현성 검증(체크섬, 버전 핀닝), (2) 호스트-VM 간 네트워크 격리 및 화이트리스트 설정, (3) VM 종료 후 부작용 제거(임시 파일, 네트워크 연결) 자동화를 CI workflow에 포함하는 가이드
+- [v20260912.2] 2026-09-12 | Hacker News | context | 조직 내 Claude Code 및 Codex 에이전트를 부서별로 배포·관리하는 자체 호스팅 OS 플랫폼
+  → Layer 1 '.claude/team-governance.md' 옵션 항목 확장: 조직 차원에서 여러 에이전트를 부서별·프로젝트별로 배포할 때 (1) 에이전트별 CLAUDE.md 상속 및 오버라이드 규칙, (2) 부서 간 공유 리소스(스킬, MCP, 인증)의 버전 관리 및 정책 충돌 해결, (3) 중앙 집중식 감시 및 알림 시스템 구성 가이드
+- [v20260912.3] 2026-09-12 | Hacker News | context | Claude Code 성능 불만 및 제어 불가능성 문제: 의도하지 않은 작업 시작 및 오버헤드
+  → Layer 1 'CLAUDE.md' 기준에 '에이전트 제어 가능성 검증' 섹션 강화: AI의 의도하지 않은 행동 방지를 위해 (1) 작업 개시 시 사용자 명시적 확인 필수 조건, (2) 예상 범위를 벗어나는 파일 수정·배포 감지 기준(변경 라인 수, 파일 개수, 시간 초과), (3) 비상 중단 단축키 및 상태 롤백 메커니즘 정의를 CLAUDE.md에 필수 포함하도록 강제
+
 - [v20260905.1] 2026-09-05 | Hacker News | enforcement | Claude Code Opus 5 Auto Mode 보안 취약점: 자동 실행 모드의 의도하지 않은 행동 분석
   → Layer 2 '.claude/settings.json hooks'에 'Auto Mode 안전성 검증' 항목 강화: Opus 5 Auto Mode 활성화 시 (1) 자동 실행 전 사용자 의도 재검증 메커니즘, (2) 예상 밖의 파일 수정·배포 감지 및 중단 조건, (3) Auto Mode 바이패스 또는 의도 불일치 탐지 로직을 PreToolUse hook에서 강제하는 구체적 설정 예시 추가
 - [v20260905.2] 2026-09-05 | Hacker News | context | Claude Code 도구 선택 동향 분석: 17k 실행 기반 도구별 성능 비교 데이터
