@@ -74,6 +74,11 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20260919.1] 2026-09-19 | Hacker News | context | Claude Code가 CLAUDE.md 대신 AGENTS.md를 읽도록 지원 (공식 변경사항)
+  → Layer 1 필수 요소에 'AGENTS.md 지원' 항목 추가: CLAUDE.md와 AGENTS.md 중 우선순위 규칙 명시. AGENTS.md 도입 시 (1) 파일 포맷 및 필수 필드 정의, (2) CLAUDE.md와의 호환성 유지 방식, (3) 마이그레이션 가이드를 명시하도록 강제
+- [v20260919.2] 2026-09-19 | Hacker News | enforcement | Houthis가 Claude Code로 미사일 유도소프트웨어 개발 - 악용 사례 분석
+  → Layer 2에 '.claude/security-audit.md' 필수 항목 추가: 민감한 도메인(무기, 암호화폐, 생화학)에서 Claude Code 사용 제한 정책. (1) 금지 작업 목록(미사일, 드론, 바이러스 관련 키워드), (2) 감지 시 즉시 중단 메커니즘을 PreToolUse hook에 포함, (3) 접근 제어 및 감시 로그를 강제하는 설정
+
 - [v20260912.1] 2026-09-12 | Hacker News | enforcement | 격리된 VM 환경에서 Claude Code와 Codex를 안전하게 실행하는 Coop 도구
   → Layer 2 '.claude/execution-environment.md' 항목 강화: Claude Code를 격리된 VM 환경(Coop 등)에서 실행할 때 (1) VM 이미지의 재현성 검증(체크섬, 버전 핀닝), (2) 호스트-VM 간 네트워크 격리 및 화이트리스트 설정, (3) VM 종료 후 부작용 제거(임시 파일, 네트워크 연결) 자동화를 CI workflow에 포함하는 가이드
 - [v20260912.2] 2026-09-12 | Hacker News | context | 조직 내 Claude Code 및 Codex 에이전트를 부서별로 배포·관리하는 자체 호스팅 OS 플랫폼
