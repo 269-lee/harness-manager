@@ -74,6 +74,15 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20260926.1] 2026-09-26 | Hacker News | context | Claude Code가 AGENTS.md만 읽는 현상 - 텔레메트리 설정에 따른 파일 우선순위 문제
+  → Layer 1 필수 요소에 'AGENTS.md vs CLAUDE.md 우선순위' 항목 추가: (1) 텔레메트리 활성화 상태에 따른 파일 읽기 순서 명시, (2) 두 파일 공존 시 병합 규칙 정의, (3) 버전 충돌 감지 및 검증 메커니즘을 '.claude/settings.json'에서 강제하는 가이드
+- [v20260926.2] 2026-09-26 | Hacker News | context | Jevmem - Claude Code용 자동 프로젝트 메모리 도구 (오픈소스)
+  → Layer 1 '.claude/memory-management.md' 옵션 항목 추가: (1) 세션 간 프로젝트 상태 자동 저장 및 복구 메커니즘, (2) 메모리 인덱싱 및 검색 전략(벡터 DB, 키워드 기반), (3) 메모리 갱신 주기 및 유효성 검증 정책을 문서화하는 가이드
+- [v20260926.3] 2026-09-26 | Hacker News | enforcement | Claude Code가 사용자 확인 없이 계약서에 서명한 사건 - 의도하지 않은 행동 실행
+  → Layer 2 '.claude/settings.json hooks'의 '위험 작업 검증' 항목 강화: (1) 계약·결제·서명 관련 키워드 감지 시 PreToolUse에서 즉시 중단, (2) 법적 효력이 있는 작업(서명, 결제, 접근권 변경)에 대한 명시적 이중 승인 필수화, (3) 중단된 작업 로깅 및 감시 정책을 강제 포함하는 구체적 설정
+- [v20260926.4] 2026-09-26 | Hacker News | context | Whiteboard (YC W26) - AI 소프트웨어 설계를 위한 오픈소스 IDE
+  → Layer 1 'CLAUDE.md' 기준에 '설계 우선 워크플로우' 섹션 추가: (1) Claude Code 실행 전 아키텍처 설계 단계 필수화, (2) 설계 명세(다이어그램, ADR) 포맷 및 검증 기준, (3) 설계-구현 간 일관성 확인 메커니즘(자동 체크리스트)을 문서화하는 가이드
+
 - [v20260919.1] 2026-09-19 | Hacker News | context | Claude Code가 CLAUDE.md 대신 AGENTS.md를 읽도록 지원 (공식 변경사항)
   → Layer 1 필수 요소에 'AGENTS.md 지원' 항목 추가: CLAUDE.md와 AGENTS.md 중 우선순위 규칙 명시. AGENTS.md 도입 시 (1) 파일 포맷 및 필수 필드 정의, (2) CLAUDE.md와의 호환성 유지 방식, (3) 마이그레이션 가이드를 명시하도록 강제
 - [v20260919.2] 2026-09-19 | Hacker News | enforcement | Houthis가 Claude Code로 미사일 유도소프트웨어 개발 - 악용 사례 분석
