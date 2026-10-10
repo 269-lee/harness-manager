@@ -74,6 +74,15 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20261010.1] 2026-10-10 | Hacker News | context | Claude Code가 행성 발견에 사용됨 - 복잡한 데이터 분석 작업의 실제 성공 사례
+  → Layer 1 'CLAUDE.md' 기준에 '작업 복잡도별 성공 사례' 섹션 추가: (1) 데이터 분석, 과학 연구 등 고복잡도 작업의 성공 패턴 기록, (2) 프로젝트 스코프별 전제 조건(필요한 컨텍스트 깊이, 도메인 스킬 파일 수), (3) 복잡한 작업 성공의 CLAUDE.md 작성 체크리스트를 제공하는 가이드
+- [v20261010.2] 2026-10-10 | Hacker News | enforcement | Claude Code의 메시지 제안 기능 분석 - 모델의 의도하지 않은 행동 메커니즘 밝혀짐
+  → Layer 2 '.claude/settings.json hooks'에 '제안 기능 제어(suggested_actions 제한)' 항목 추가: (1) Claude Code가 자동 제안하는 액션(메시지, 커밋, 배포)의 활성화 여부 설정, (2) PreToolUse hook에서 AI의 자체 제안 액션 필터링 및 사용자 확인 강제, (3) 제안된 액션 로깅 및 거절 통계 수집 메커니즘을 PostToolUse에 포함하는 설정
+- [v20261010.3] 2026-10-10 | Hacker News | context | 엔지니어 불만 - Claude Code 사용이 업무를 '영혼이 없게' 만드는 문제
+  → Layer 1 'CLAUDE.md' 기준에 '인간 개입 및 학습 기회 보존' 섹션 추가: (1) AI가 처리할 작업 범위와 인간이 개입해야 할 작업 경계 명시, (2) 반복 작업의 자동화 vs 학습 기회 간의 트레이드오프 정의, (3) AI 출력 검토 및 개선 과정의 필수 포함을 CLAUDE.md 작성 기준으로 강제
+- [v20261010.4] 2026-10-10 | Hacker News | context | Agent.reviews - AI 에이전트 도구 평가 및 리뷰 플랫폼 출시
+  → Layer 1 'CLAUDE.md' 기준에 '도구 선택 및 평가' 섹션 추가: (1) Claude Code 외 대체 에이전트 도구 평가 기준(속도, 비용, 정확도, 커뮤니티 지원), (2) 프로젝트 특성별 도구 조합 선택 방식, (3) 도구 비교 체크리스트 및 벤치마크 데이터 링크(agent.reviews 등)를 CLAUDE.md에 포함하는 가이드
+
 - [v20260926.1] 2026-09-26 | Hacker News | context | Claude Code가 AGENTS.md만 읽는 현상 - 텔레메트리 설정에 따른 파일 우선순위 문제
   → Layer 1 필수 요소에 'AGENTS.md vs CLAUDE.md 우선순위' 항목 추가: (1) 텔레메트리 활성화 상태에 따른 파일 읽기 순서 명시, (2) 두 파일 공존 시 병합 규칙 정의, (3) 버전 충돌 감지 및 검증 메커니즘을 '.claude/settings.json'에서 강제하는 가이드
 - [v20260926.2] 2026-09-26 | Hacker News | context | Jevmem - Claude Code용 자동 프로젝트 메모리 도구 (오픈소스)
