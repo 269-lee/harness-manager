@@ -74,6 +74,17 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20261024.1] 2026-10-24 | Hacker News | enforcement | Tmux를 활용한 Claude Code 세션 관리 및 멀티플렉싱 가이드
+  → Layer 2 '.claude/settings.json hooks'에 '세션 멀티플렉싱 및 상태 동기화' 항목 추가: 여러 Claude Code 세션을 Tmux로 병렬 실행할 때 (1) 세션별 프로세스 격리 및 리소스 할당 정책, (2) 세션 간 명령 전달(send-keys) 순서 보장 메커니즘, (3) 세션 충돌 감지 및 자동 복구 로직을 PreToolUse/PostToolUse hook에서 강제하는 설정 가이드
+- [v20261024.2] 2026-10-24 | Hacker News | enforcement | Corgi - 에이전트와 터미널을 통합 관리하는 오픈소스 멀티플렉서
+  → Layer 2 '.claude/execution-environment.md'에 '터미널 멀티플렉싱 도구 통합' 항목 추가: Claude Code와 로컬 CLI 도구를 Corgi 같은 멀티플렉서로 통합할 때 (1) 에이전트-터미널 간 명령 실행 순서 제어, (2) 표준 출력/에러 수집 및 검증, (3) 예상 밖의 장시간 실행 감지 및 타임아웃 설정을 명시하는 가이드
+- [v20261024.3] 2026-10-24 | Hacker News | context | Omnara - Claude Managed Agents의 오픈소스 대체 구현
+  → Layer 1 'CLAUDE.md' 기준에 '에이전트 독립성 및 포팅 가능성' 섹션 추가: 상용 Managed Agents에 종속되지 않기 위해 (1) Omnara 같은 오픈소스 구현으로의 포팅 가능 조건, (2) CLAUDE.md와 skills/의 플랫폼 독립적 작성 기준, (3) 에이전트 플랫폼 변경 시 마이그레이션 체크리스트를 명시하는 가이드
+- [v20261024.4] 2026-10-24 | Hacker News | enforcement | Sphinx - AI 생성 코드 배포 전 인간 검증 플러그인
+  → Layer 2 '.claude/settings.json hooks'에 '배포 전 검증 게이트(Pre-deployment Quiz)' 항목 강화: 코드 배포 직전에 (1) 변경 사항에 대한 구체적 검증 항목 정의(Sphinx 스타일 퀴즈), (2) 통과 조건 및 재시도 정책, (3) 검증 실패 시 배포 자동 중단을 PostToolUse hook에서 강제 실행하는 구체적 설정 예시
+- [v20261024.5] 2026-10-24 | Hacker News | enforcement | Laminar (YC S24) - 에이전트 추적 오류 감지용 RL 모델
+  → Layer 2 CI workflow 기준에 '에이전트 행동 추적 검증' 항목 추가: AI 에이전트의 실행 추적(agent traces)에서 오류를 자동 감지하기 위해 (1) Laminar 같은 검증 모델 통합, (2) 행동 추적의 일관성 확인(목표 대비 실제 행동), (3) 편차 감지 시 자동 알림 및 롤백 메커니즘을 CI/CD에 포함하는 가이드
+
 - [v20261017.1] 2026-10-17 | Hacker News | enforcement | Claude Code 팀의 코드 리뷰 프로세스 및 자동화 기법 공개
   → Layer 2 '.claude/settings.json hooks'에 '코드 리뷰 자동화 게이트' 항목 추가: Anthropic의 실제 코드 리뷰 프로세스를 참고하여 (1) 자동 리뷰 가능 범위(파일 규모, 복잡도) 정의, (2) 인간 리뷰 필수 조건(보안, 아키텍처, 성능 변경) 명시, (3) PR 머지 전 자동 검사 체크리스트를 PostToolUse hook에서 강제하는 구체적 설정
 - [v20261017.2] 2026-10-17 | Hacker News | context | 게임 개발용 AI 하네스 엔지니어링 - 구체적 구조 및 제어 메커니즘
