@@ -74,6 +74,15 @@
 > 형식: `[버전] YYYY-MM-DD | 출처 | 반영 이유`
 
 <!-- EVOLUTION_LOG_START -->
+- [v20261031.1] 2026-10-31 | Hacker News | enforcement | Claude Code VS Code 확장의 백도어 공격 - 공식 마켓플레이스에서 악성 코드 배포됨
+  → Layer 2 '.claude/settings.json hooks'에 '확장/플러그인 무결성 검증' 항목 추가: Claude Code 실행 전 IDE 확장의 서명 검증, 버전 확인, 알려진 취약점 스캔을 PreToolUse hook에서 강제 실행하고, 의도하지 않은 네트워크 통신 감지 시 즉시 중단하는 메커니즘 구현
+- [v20261031.2] 2026-10-31 | Hacker News | enforcement | Claude Code가 백그라운드 에이전트 트랜스크립트를 자동으로 모델에 전송하는 텔레메트리 현상
+  → Layer 2에 '.claude/telemetry-audit.md' 필수 항목 추가: 세션 데이터(트랜스크립트, 코드, 입력값)의 자동 전송 정책을 명시하고, PreToolUse/PostToolUse hook에서 (1) 전송 전 민감 정보 마스킹, (2) 텔레메트리 비활성화 강제, (3) 전송 내용 로깅 및 감시를 구현하는 가이드
+- [v20261031.3] 2026-10-31 | Hacker News | context | Anthropic이 Stanford 교수의 저작물을 무단으로 학습 데이터에 사용 - 모델 신뢰성 및 법적 위험
+  → Layer 1 'CLAUDE.md' 기준에 '모델 학습 데이터 및 라이선스 투명성' 섹션 추가: 사용 중인 Claude 버전의 학습 데이터 출처, 저작권 이의 내역, 프로젝트 규제 환경(저작권 민감도) 고려 사항을 문서화하도록 강제
+- [v20261031.4] 2026-10-31 | Hacker News | context | Hob - Claude Code의 오픈소스 온디바이스 대안 출시
+  → Layer 1 'CLAUDE.md' 기준에 '에이전트 플랫폼 독립성 및 오픈소스 대안' 섹션 강화: 상용 Claude Code 대신 오픈소스 에이전트(Hob 등) 사용 시 (1) 호환성 검증 체크리스트, (2) 성능/기능 비교 기준(토큰 효율성, 기능 지원도), (3) 마이그레이션 가이드를 포함하는 평가 프레임워크 제공
+
 - [v20261024.1] 2026-10-24 | Hacker News | enforcement | Tmux를 활용한 Claude Code 세션 관리 및 멀티플렉싱 가이드
   → Layer 2 '.claude/settings.json hooks'에 '세션 멀티플렉싱 및 상태 동기화' 항목 추가: 여러 Claude Code 세션을 Tmux로 병렬 실행할 때 (1) 세션별 프로세스 격리 및 리소스 할당 정책, (2) 세션 간 명령 전달(send-keys) 순서 보장 메커니즘, (3) 세션 충돌 감지 및 자동 복구 로직을 PreToolUse/PostToolUse hook에서 강제하는 설정 가이드
 - [v20261024.2] 2026-10-24 | Hacker News | enforcement | Corgi - 에이전트와 터미널을 통합 관리하는 오픈소스 멀티플렉서
